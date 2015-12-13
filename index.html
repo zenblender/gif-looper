@@ -6,6 +6,7 @@
   <style>
     body {
       margin: 0;
+      background-color: black;
     }
     #gifs > img {
       display: block;
@@ -14,9 +15,24 @@
       height: 100vh;
       object-fit: cover;
     }
+    #gifs > .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      font-size: 1000%;
+      color: #444;
+    }
   </style>
 </head>
 <body>
+  <div id="gifs">
+    <div class="loading">
+      LOADING
+    </div>
+  </div>
   <script src="bundle.js"></script>
 </body>
 </html>

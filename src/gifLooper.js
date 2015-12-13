@@ -1,87 +1,68 @@
 import gify from './gify'
 
-import GifLibrary from './gifLibrary'
+import GifCacher from './gifCacher'
 
 const MIN_DURATION_MS = 1500
-
-const URL_CREATOR = window.URL || window.webkitURL
 
 class GifLooper {
 
   constructor(container, urls) {
-    this._container   = container
-    this._library     = new GifLibrary(urls)
-  }
-
-  _getDelay(arrayBuffer) {
-    const gifInfo = gify.getInfo(arrayBuffer)
-    const duration = gifInfo.durationChrome
-    // loop completely as many times as needed to get over the minimum duration
-    return Math.ceil(MIN_DURATION_MS / duration) * duration
-  }
-
-  _renderImgFromData(arrayBuffer) {
-    const promise = new Promise((resolve) => {
-      const delay = this._getDelay(arrayBuffer)
-      const blob = new Blob([arrayBuffer], {type: "image/gif"})
-      const url = URL_CREATOR.createObjectURL(blob)
-      const img = new Image()
-      img.onload = () => {
-        this._container.innerHTML = ''
-        this._container.appendChild(img)
-        resolve(delay)
-      }
-      img.src = url
-    })
-    return promise
-  }
-
-  _handleStatus(response) {
-    if (response.statusText === 'OK') {
-      return Promise.resolve(response)
-    } else {
-      return Promise.reject('image could not be grabbed')
-    }
-  }
-
-  _requestData(response) {
-    return Promise.resolve(response.arrayBuffer())
-  }
-
-  _displayNext() {
-    this._displayUrl(this._library.getNextUrl())
-  }
-
-  _displayNextAlternate() {
-    this._displayUrl(this._library.getNextAlternateUrl())
-  }
-
-  _displayUrl(url) {
-    console.log('fetch', url)
-    fetch(url)
-      .then(this._handleStatus)
-      .then(this._requestData)
-      .then(this._renderImgFromData.bind(this))
-      .then(this._wait.bind(this))
-      .catch(e => {
-        console.log('ERROR', e, url)
-        console.log('attempting to load alternate...')
-        this._displayNextAlternate()  
-      })
-  }
-
-  _wait(delay) {
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, delay)
-    }).then(() => {
-      this._displayNext()
-    })
+    this._container       = container
+    this._cacher          = new GifCacher(urls)
+    this._gifImage        = null
+    this._currentStartMs  = null
   }
 
   start() {
-    this._displayNext()
+    this._waitForFirstDownload()
+  }
+
+  _waitForFirstDownload() {
+    setTimeout(() => {
+      const gifImage = this._cacher.getNextGifImage()
+      if (gifImage) {
+        this._displayGifImage(gifImage)
+      } else {
+        this._waitForFirstDownload()
+      }
+    }, 2000)
+  }
+
+  _displayGifImage(gifImage) {
+    this._gifImage = gifImage
+
+    this._container.innerHTML = ''
+    this._container.appendChild(this._gifImage.image)
+
+    this._currentStartMs = Date.now()
+    this._wait()
+  }
+
+  _maybeDisplayNext() {
+    const gifImage = this._cacher.getNextGifImage()
+    if (gifImage) {
+      this._displayGifImage(gifImage)
+    } else {
+      this._wait()
+    }
+  }
+
+  _wait() {
+    const now = Date.now()
+
+    const gifMinDurationMs =
+      Math.ceil(MIN_DURATION_MS / this._gifImage.duration) * this._gifImage.duration
+
+    let nextEligibleStopTimeMs = this._currentStartMs + gifMinDurationMs
+    while (nextEligibleStopTimeMs < now) {
+      nextEligibleStopTimeMs += this._gifImage.duration
+    }
+
+    const newDelayMs = nextEligibleStopTimeMs - now
+
+    setTimeout(() => {
+      this._maybeDisplayNext()
+    }, newDelayMs)
   }
 
 }

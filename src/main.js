@@ -28,20 +28,11 @@ const urls = [
   'http://media.giphy.com/media/YZtALRQ1wHdUQ/giphy.gif',
   'http://media.giphy.com/media/oqpicLkw58HAc/giphy.gif',
   'http://media3.giphy.com/media/ELPtC7diADV2o/giphy.gif',
-  'http://38.media.tumblr.com/bf1db33233b87ecc9eb8eaaaaf59b8aa/tumblr_inline_nnwea2azzD1raprkq_500.gif',
-  'http://i.imgur.com/LWMA0TL.gif'
+  'http://38.media.tumblr.com/bf1db33233b87ecc9eb8eaaaaf59b8aa/tumblr_inline_nnwea2azzD1raprkq_500.gif'
 ]
 
 function go() {
-
-  const renderContainer = () => {
-    const container = document.createElement('div')
-    container.id = 'gifs'
-    document.body.appendChild(container)
-    return container
-  }
-
-  const gifLooper = new GifLooper(renderContainer(), urls)
+  const gifLooper = new GifLooper(document.querySelector('#gifs'), urls)
   gifLooper.start()
 }
 
