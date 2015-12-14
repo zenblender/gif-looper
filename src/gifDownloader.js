@@ -4,6 +4,11 @@ import GifImage from './gifImage'
 
 const URL_CREATOR = window.URL || window.webkitURL
 
+if (!window.fetch) {
+  // polyfill fetch
+  require('whatwg-fetch')
+}
+
 class GifDownloader {
 
   constructor(urlOrArray) {
@@ -52,8 +57,7 @@ class GifDownloader {
   }
 
   _fetchUrl(url) {
-    console.log(url)
-    fetch(url)
+    window.fetch(url)
     .then(this._handleStatus)
     .then(this._requestData)
     .then(this._createImgFromData.bind(this))
