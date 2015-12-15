@@ -9,7 +9,8 @@ const TAGS = [
   'crazy',
   'dancing',
   'winning',
-  'surreal'
+  'surreal',
+  'infomercial'
 ]
 
 class GifRandomLibrary extends GifLibrary {
