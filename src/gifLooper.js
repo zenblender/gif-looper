@@ -6,9 +6,9 @@ const MIN_DURATION_MS = 1500
 
 class GifLooper {
 
-  constructor(container, urls) {
+  constructor(container, libraryClass) {
     this._container       = container
-    this._cacher          = new GifCacher(urls)
+    this._cacher          = new GifCacher(libraryClass)
     this._gifImage        = null
     this._currentStartMs  = null
   }
@@ -25,7 +25,7 @@ class GifLooper {
       } else {
         this._waitForFirstDownload()
       }
-    }, 2000)
+    }, 500)
   }
 
   _displayGifImage(gifImage) {

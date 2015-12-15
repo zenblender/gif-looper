@@ -4,22 +4,24 @@ import GifImage from './gifImage'
 
 const URL_CREATOR = window.URL || window.webkitURL
 
-if (!window.hasOwnProperty('fetch')) {
-  // polyfill fetch
-  console.log('polyfilling fetch()')
-  require('whatwg-fetch')
-}
-
 class GifDownloader {
 
-  constructor(urlOrArray) {
-    this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
-
+  constructor(urlOrArrayOrPromise) {
     this._index = 0
     this._gifImage = null
     this._hasFailed = false
 
-    this._fetchNext()
+    if (urlOrArrayOrPromise.then) {
+      // promise provided
+      urlOrArrayOrPromise.then(urlOrArray => {
+        this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
+        this._fetchNext()
+      })
+    } else {
+      const urlOrArray = urlOrArrayOrPromise
+      this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
+      this._fetchNext()
+    }
   }
 
   _fetchNext() {

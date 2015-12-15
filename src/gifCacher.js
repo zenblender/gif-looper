@@ -1,12 +1,11 @@
 import GifDownloader from './gifDownloader'
-import GifLibrary from './gifLibrary'
 
 const NUM_CACHED = 5
 
 class GifCacher {
 
-  constructor(urls) {
-    this._library = new GifLibrary(urls)
+  constructor(libraryClass) {
+    this._library = new libraryClass()
     this._downloads = []
     this._fillCache()
   }
