@@ -12,15 +12,21 @@ class GifDownloader {
     this._hasFailed = false
 
     if (urlOrArrayOrPromise.then) {
+
       // promise provided
-      urlOrArrayOrPromise.then(urlOrArray => {
+      urlOrArrayOrPromise
+      .then(urlOrArray => {
         this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
         this._fetchNext()
       })
+      .catch(this._handleError.bind(this))
+
     } else {
+
       const urlOrArray = urlOrArrayOrPromise
       this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
       this._fetchNext()
+
     }
   }
 
