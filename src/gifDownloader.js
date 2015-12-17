@@ -6,7 +6,9 @@ const URL_CREATOR = window.URL || window.webkitURL
 
 class GifDownloader {
 
-  constructor(urlOrArrayOrPromise) {
+  constructor(library, urlOrArrayOrPromise) {
+    this._library = library
+
     this._index = 0
     this._gifImage = null
     this._hasFailed = false
@@ -15,18 +17,22 @@ class GifDownloader {
 
       // promise provided
       urlOrArrayOrPromise
-      .then(urlOrArray => {
-        this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
-        this._fetchNext()
-      })
+      .then(this._handleUrlOrArray.bind(this))
       .catch(this._handleError.bind(this))
 
     } else {
 
-      const urlOrArray = urlOrArrayOrPromise
-      this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
-      this._fetchNext()
+      this._handleUrlOrArray(urlOrArrayOrPromise)
 
+    }
+  }
+
+  _handleUrlOrArray(urlOrArray) {
+    this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
+    if (this._library.isAllowed(this._urls)) {
+      this._fetchNext()  
+    } else {
+      this._fail('url used recently')
     }
   }
 
@@ -81,9 +87,13 @@ class GifDownloader {
       this._index++
       this._fetchNext()
     } else {
-      console.log('no more URLs to try')
-      this._hasFailed = true
+      this._fail('no more URLs to try')
     }
+  }
+
+  _fail(reason) {
+    console.log(reason)
+    this._hasFailed = true
   }
 
   _finish(gifImage) {
@@ -92,6 +102,10 @@ class GifDownloader {
 
   getGifImage() {
     return this._gifImage
+  }
+
+  hasGifImage() {
+    return !!this._gifImage
   }
 
   hasFailed() {

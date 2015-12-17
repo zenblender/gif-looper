@@ -8,7 +8,7 @@ class GifLooper {
 
   constructor(container, libraryClass) {
     this._container       = container
-    this._cacher          = new GifCacher(libraryClass)
+    this._cacher          = new libraryClass.cacherClass(libraryClass)
     this._gifImage        = null
     this._currentStartMs  = null
   }

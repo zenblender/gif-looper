@@ -2,6 +2,7 @@ import flatten from 'lodash/array/flatten'
 import shuffle from 'lodash/collection/shuffle'
 
 import GifLibrary from './gifLibrary'
+import GifSequentialCacher from './gifSequentialCacher'
 
 const PREFER_LOCAL_FILES  = false
 const LOCAL_URL_PREFIX    = 'gifs/'
@@ -75,6 +76,10 @@ class GifStaticLibrary extends GifLibrary {
     super()
     this._gifIndex = -1
     this._gifs = GifStaticLibrary._build(URLS)
+  }
+
+  static get cacherClass() {
+    return GifSequentialCacher
   }
 
   static _build(urls) {

@@ -12,35 +12,13 @@ class GifCacher {
 
   _fillCache() {
     while (this._downloads.length < NUM_CACHED) {
-      const download = new GifDownloader(this._library.getNextSet())
+      const download = new GifDownloader(this._library, this._library.getNextSet())
       this._downloads.push(download)
     }
   }
 
   getNextGifImage() {
-
-    const removeFirst = () => {
-      this._downloads.splice(0, 1)
-    }
-
-    let gifImage = null
-
-    if (this._downloads.length) {
-      const firstDownload = this._downloads[0]
-      if (firstDownload.hasFailed()) {
-        removeFirst()
-        return this.getNextGifImage()
-      } else {
-        gifImage = firstDownload.getGifImage()
-        if (gifImage) {
-          removeFirst()
-        }
-      }
-    }
-
-    this._fillCache()
-
-    return gifImage
+    // override me
   }
   
 }

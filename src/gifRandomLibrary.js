@@ -1,6 +1,8 @@
 import sample from 'lodash/collection/sample'
 
+import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'
+import GifRandomCacher from './gifRandomCacher'
 
 const TAGS = [
   'funny',
@@ -14,6 +16,15 @@ const TAGS = [
 ]
 
 class GifRandomLibrary extends GifLibrary {
+
+  constructor() {
+    super()
+    this._history = new GifHistory()
+  }
+
+  static get cacherClass() {
+    return GifRandomCacher
+  }
 
   _getApiUrl() {
     return `http://api.giphy.com/v1/gifs/random?tag=${ sample(TAGS) }&api_key=dc6zaTOxFJmzC`
@@ -40,6 +51,10 @@ class GifRandomLibrary extends GifLibrary {
     return fetch(this._getApiUrl())
     .then(_handleStatus)
     .then(_requestData)
+  }
+
+  isAllowed(urls) {
+    return this._history.isAllowed(urls)
   }
 
 }
