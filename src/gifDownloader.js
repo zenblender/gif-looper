@@ -46,13 +46,18 @@ class GifDownloader {
   }
 
   _createImgFromData(arrayBuffer) {
-    const promise = new Promise((resolve) => {
+    const promise = new Promise((resolve, reject) => {
       const duration = this._getDuration(arrayBuffer)
       const blob = new Blob([arrayBuffer], {type: "image/gif"})
       const url = URL_CREATOR.createObjectURL(blob)
       const img = new Image()
       img.onload = () => {
+        URL_CREATOR.revokeObjectURL(url)
         resolve(new GifImage(img, duration))
+      }
+      img.onerror = () => {
+        URL_CREATOR.revokeObjectURL(url)
+        reject('object url could not be loaded')
       }
       img.src = url
     })
