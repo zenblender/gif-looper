@@ -5,14 +5,14 @@ import GifLibrary from './gifLibrary'
 import GifRandomCacher from './gifRandomCacher'
 
 const TAGS = [
-  'funny',
-  'weird',
+  ['funny', 'fun', 'hilarious', 'silly'],
+  ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
   'fail',
-  'crazy',
-  'dancing',
-  'winning',
-  'surreal',
-  'infomercial'
+  ['fall', 'spill', 'crash', ['stunt', 'stunts']],
+  ['dance', 'dancing'],
+  ['infomercial', 'commercial'],
+  ['cat', 'cats'],
+  'reaction'
 ]
 
 class GifRandomLibrary extends GifLibrary {
@@ -26,8 +26,16 @@ class GifRandomLibrary extends GifLibrary {
     return GifRandomCacher
   }
 
+  _getTag() {
+    let tagOrArray = sample(TAGS)
+    while (Array.isArray(tagOrArray)) {
+      tagOrArray = sample(tagOrArray)
+    }
+    return tagOrArray
+  }
+
   _getApiUrl() {
-    return `http://api.giphy.com/v1/gifs/random?tag=${ sample(TAGS) }&api_key=dc6zaTOxFJmzC`
+    return `http://api.giphy.com/v1/gifs/random?tag=${ this._getTag() }&api_key=dc6zaTOxFJmzC`
   }
 
   getNextSet() {

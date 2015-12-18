@@ -1,5 +1,5 @@
 export default {
   
-  numRememberedUrls: 100
+  numRememberedUrls: 200
 
 }
