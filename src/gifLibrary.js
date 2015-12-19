@@ -1,9 +1,5 @@
 class GifLibrary {
   
-  static get cacherClass() {
-    // override me
-  }
-
   getNextSet() {
     // override me
   }

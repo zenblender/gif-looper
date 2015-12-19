@@ -1,11 +1,9 @@
+import config from './config'
+
 import flatten from 'lodash/array/flatten'
 import shuffle from 'lodash/collection/shuffle'
 
 import GifLibrary from './gifLibrary'
-import GifSequentialCacher from './gifSequentialCacher'
-
-const PREFER_LOCAL_FILES  = false
-const LOCAL_URL_PREFIX    = 'gifs/'
 
 const URLS = [
   ['cat-double-take.gif', 'https://media.giphy.com/media/Zg44yLGbvXCjm/giphy.gif'],
@@ -78,10 +76,6 @@ class GifStaticLibrary extends GifLibrary {
     this._gifs = GifStaticLibrary._build(URLS)
   }
 
-  static get cacherClass() {
-    return GifSequentialCacher
-  }
-
   static _build(urls) {
 
     const isRemote = function(url) {
@@ -98,9 +92,9 @@ class GifStaticLibrary extends GifLibrary {
         return flatten(Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray], true)
       })
       .map(urlAlternates => {
-        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ LOCAL_URL_PREFIX }${ url }`)
+        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.static.localUrlPrefix }${ url }`)
         const remoteUrls  = urlAlternates.filter(isRemote)
-        return PREFER_LOCAL_FILES ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
+        return config.static.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
       })
     )
   }

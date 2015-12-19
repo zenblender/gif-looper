@@ -1,22 +1,11 @@
+import config from './config'
+
 import sample from 'lodash/collection/sample'
 
 import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'
-import GifRandomCacher from './gifRandomCacher'
 
-const TAGS = [
-  ['funny', 'fun', 'hilarious', 'silly'],
-  ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
-  'fail',
-  'win',
-  ['fall', 'spill', 'crash', ['stunt', 'stunts']],
-  ['dance', 'dancing'],
-  ['infomercial', 'commercial'],
-  [['cat', 'cats'], ['animal', 'animals']],
-  'reaction',
-  '80s',
-  [['laugh', 'laughing'], 'awkward']
-]
+const PUBLIC_API_KEY = 'dc6zaTOxFJmzC'
 
 class GifRandomLibrary extends GifLibrary {
 
@@ -25,12 +14,8 @@ class GifRandomLibrary extends GifLibrary {
     this._history = new GifHistory()
   }
 
-  static get cacherClass() {
-    return GifRandomCacher
-  }
-
   _getTag() {
-    let tagOrArray = sample(TAGS)
+    let tagOrArray = sample(config.random.tags)
     while (Array.isArray(tagOrArray)) {
       tagOrArray = sample(tagOrArray)
     }
@@ -38,7 +23,7 @@ class GifRandomLibrary extends GifLibrary {
   }
 
   _getApiUrl() {
-    return `http://api.giphy.com/v1/gifs/random?tag=${ this._getTag() }&api_key=dc6zaTOxFJmzC`
+    return `http://api.giphy.com/v1/gifs/random?tag=${ this._getTag() }&api_key=${ PUBLIC_API_KEY }`
   }
 
   getNextSet() {

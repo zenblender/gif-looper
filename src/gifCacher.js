@@ -1,17 +1,24 @@
-import GifDownloader from './gifDownloader'
+import config from './config'
 
-const NUM_CACHED = 5
+import GifDownloader from './gifDownloader'
 
 class GifCacher {
 
-  constructor(libraryClass) {
-    this._library = new libraryClass()
+  constructor() {
+    this._library = null
     this._downloads = []
+  }
+
+  start() {
     this._fillCache()
   }
 
+  setLibrary(library) {
+    this._library = library
+  }
+
   _fillCache() {
-    while (this._downloads.length < NUM_CACHED) {
+    while (this._downloads.length < config.numConcurrentDownloads) {
       const download = new GifDownloader(this._library, this._library.getNextSet())
       this._downloads.push(download)
     }

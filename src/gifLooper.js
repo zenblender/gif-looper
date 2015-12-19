@@ -1,25 +1,26 @@
-import gify from './gify'
+require('./polyfill')
 
-import GifCacher from './gifCacher'
+import config from './config'
 
-const MIN_DURATION_MS = 1500
+import GifSource from './gifSource'
 
 class GifLooper {
 
-  constructor(container, libraryClass) {
+  constructor(container) {
     this._container       = container
-    this._cacher          = new libraryClass.cacherClass(libraryClass)
+    this._source          = GifSource.getDefault()
     this._gifImage        = null
     this._currentStartMs  = null
   }
 
   start() {
+    this._source.startDownloading()
     this._waitForFirstDownload()
   }
 
   _waitForFirstDownload() {
     setTimeout(() => {
-      const gifImage = this._cacher.getNextGifImage()
+      const gifImage = this._source.getNextGifImage()
       if (gifImage) {
         this._displayGifImage(gifImage)
       } else {
@@ -39,7 +40,7 @@ class GifLooper {
   }
 
   _maybeDisplayNext() {
-    const gifImage = this._cacher.getNextGifImage()
+    const gifImage = this._source.getNextGifImage()
     if (gifImage) {
       this._displayGifImage(gifImage)
     } else {
@@ -51,7 +52,7 @@ class GifLooper {
     const now = Date.now()
 
     const gifMinDurationMs =
-      Math.ceil(MIN_DURATION_MS / this._gifImage.duration) * this._gifImage.duration
+      Math.ceil(config.minDurationMs / this._gifImage.duration) * this._gifImage.duration
 
     let nextEligibleStopTimeMs = this._currentStartMs + gifMinDurationMs
     while (nextEligibleStopTimeMs < now) {
