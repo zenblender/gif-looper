@@ -8,11 +8,14 @@ const TAGS = [
   ['funny', 'fun', 'hilarious', 'silly'],
   ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
   'fail',
+  'win',
   ['fall', 'spill', 'crash', ['stunt', 'stunts']],
   ['dance', 'dancing'],
   ['infomercial', 'commercial'],
-  ['cat', 'cats'],
-  'reaction'
+  [['cat', 'cats'], ['animal', 'animals']],
+  'reaction',
+  '80s',
+  [['laugh', 'laughing'], 'awkward']
 ]
 
 class GifRandomLibrary extends GifLibrary {
