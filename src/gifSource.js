@@ -1,12 +1,14 @@
 import config from './config'
 
 import GifRandomLibrary from './gifRandomLibrary'
+import GifRedditGifLibrary from './gifRedditGifLibrary'
 import GifStaticLibrary from './gifStaticLibrary'
 import GifRandomCacher from './gifRandomCacher'
 import GifSequentialCacher from './gifSequentialCacher'
 
 const TYPES = {
   'random': () => new GifSource(new GifRandomLibrary(), new GifRandomCacher()),
+  'reddit': () => new GifSource(new GifRedditGifLibrary(), new GifRandomCacher()),
   'static': () => new GifSource(new GifStaticLibrary(), new GifSequentialCacher())
 }
 

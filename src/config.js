@@ -21,6 +21,11 @@ export default {
       [['laugh', 'laughing'], 'awkward']
     ]
   },
+  reddit: {
+    limit: 100,
+    time: 'all',
+    subreddits: ['gifs','perfectloops']
+  },
   static: {
     localUrlPrefix:         'gifs/',
     preferLocalFiles:       false
