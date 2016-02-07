@@ -1,34 +1,49 @@
 export default {
   
   sourceType:               'random',
+  rows:                     2,
+  cols:                     2,
   minDurationMs:            1500,
-  numConcurrentDownloads:   5,
+  downloadsPerContainer:    3,
 
-  // sourceType-specific config:
-  random: {
-    numRememberedUrls:      200,
-    tags:                   [
-      ['funny', 'fun', 'hilarious', 'silly'],
-      ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
-      'fail',
-      'win',
-      ['fall', 'spill', 'crash', ['stunt', 'stunts']],
-      ['dance', 'dancing', ['breakdance', 'breakdancing']],
-      ['infomercial', 'commercial'],
-      [['cat', 'cats'], ['animal', 'animals']],
-      'reaction',
-      '80s',
-      [['laugh', 'laughing'], 'awkward']
-    ]
+  style: {
+    objectFit:              'cover',
+    imageRendering:         'pixelated'
   },
-  reddit: {
-    limit: 100,
-    time: 'all',
-    subreddits: ['gifs','perfectloops']
+
+  history: {
+    numRememberedUrls:      200
   },
-  static: {
-    localUrlPrefix:         'gifs/',
-    preferLocalFiles:       false
+
+  sources: {
+
+    random: {
+      tags:                 [
+        ['funny', 'fun', 'hilarious', 'silly'],
+        ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
+        'fail',
+        'win',
+        ['fall', 'spill', 'crash', ['stunt', 'stunts']],
+        ['dance', 'dancing', ['breakdance', 'breakdancing']],
+        ['infomercial', 'commercial'],
+        [['cat', 'cats'], ['animal', 'animals']],
+        'reaction',
+        '80s',
+        [['laugh', 'laughing'], 'awkward']
+      ]
+    },
+
+    reddit: {
+      limit: 100,
+      time: 'all',
+      subreddits: ['gifs','perfectloops']
+    },
+
+    static: {
+      localUrlPrefix:         'gifs/',
+      preferLocalFiles:       false
+    }
+
   }
 
 }

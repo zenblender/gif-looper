@@ -1,6 +1,7 @@
 class GifImage {
 
-  constructor(image, duration) {
+  constructor(urlList, image, duration) {
+    this.urlList  = urlList
     this.image    = image
     this.duration = duration
   }

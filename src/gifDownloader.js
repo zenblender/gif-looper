@@ -1,17 +1,19 @@
 import gify from './gify'
 
 import GifImage from './gifImage'
+import setImageStyle from './setImageStyle'
 
 const URL_CREATOR = window.URL || window.webkitURL
 
 class GifDownloader {
 
   constructor(library, urlOrArrayOrPromise) {
-    this._library = library
+    this._library       = library
 
-    this._index = 0
-    this._gifImage = null
-    this._hasFailed = false
+    this._index         = 0
+    this._gifImage      = null
+    this._hasFailed     = false
+    this._fetchingUrls  = []
 
     if (urlOrArrayOrPromise.then) {
 
@@ -29,15 +31,11 @@ class GifDownloader {
 
   _handleUrlOrArray(urlOrArray) {
     this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
-    if (this._library.isAllowed(this._urls)) {
+    if (this._library.canFetch(this._urls)) {
       this._fetchNext()  
     } else {
       this._fail('url used recently')
     }
-  }
-
-  _fetchNext() {
-    this._fetchUrl(this._urls[this._index])
   }
 
   _getDuration(arrayBuffer) {
@@ -53,12 +51,13 @@ class GifDownloader {
       const img = new Image()
       img.onload = () => {
         URL_CREATOR.revokeObjectURL(url)
-        resolve(new GifImage(img, duration))
+        resolve(new GifImage(this._fetchingUrls, img, duration))
       }
       img.onerror = () => {
         URL_CREATOR.revokeObjectURL(url)
         reject('object url could not be loaded')
       }
+      setImageStyle(img)
       img.src = url
     })
     return promise
@@ -76,7 +75,10 @@ class GifDownloader {
     return Promise.resolve(response.arrayBuffer())
   }
 
-  _fetchUrl(url) {
+  _fetchNext() {
+    const url = this._urls[this._index]
+    this._fetchingUrls = this._urls
+
     fetch(url)
     .then(this._handleStatus)
     .then(this._requestData)
@@ -86,6 +88,7 @@ class GifDownloader {
   }
 
   _handleError(e) {
+    this._fetchingUrls = []
     console.log('ERROR:', e)
     if (this._index < this._urls.length - 1) {
       console.log('attempting to load alternate...')
@@ -102,7 +105,8 @@ class GifDownloader {
   }
 
   _finish(gifImage) {
-    this._gifImage = gifImage
+    this._gifImage      = gifImage
+    this._fetchingUrls  = []
   }
 
   getGifImage() {

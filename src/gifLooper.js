@@ -2,13 +2,11 @@ require('./polyfill')
 
 import config from './config'
 
-import GifSource from './gifSource'
-
 class GifLooper {
 
-  constructor(container) {
+  constructor(container, source) {
     this._container       = container
-    this._source          = GifSource.getDefault()
+    this._source          = source
     this._gifImage        = null
     this._currentStartMs  = null
   }
@@ -20,7 +18,7 @@ class GifLooper {
 
   _waitForFirstDownload() {
     setTimeout(() => {
-      const gifImage = this._source.getNextGifImage()
+      const gifImage = this._source.getGifImageToDisplay()
       if (gifImage) {
         this._displayGifImage(gifImage)
       } else {
@@ -40,7 +38,7 @@ class GifLooper {
   }
 
   _maybeDisplayNext() {
-    const gifImage = this._source.getNextGifImage()
+    const gifImage = this._source.getGifImageToDisplay()
     if (gifImage) {
       this._displayGifImage(gifImage)
     } else {

@@ -31,8 +31,11 @@ class GifSource {
     this._cacher.start()
   }
 
-  getNextGifImage() {
-    return this._cacher.getNextGifImage()
+  getGifImageToDisplay() {
+    const gifImage = this._cacher.getNextGifImage()
+    if (gifImage && this._cacher.library.canDisplay(gifImage.urlList)) {
+      return gifImage
+    }
   }
   
 }

@@ -1,9 +1,8 @@
 import config from './config'
 
-import sample from 'lodash/collection/sample'
-
 import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'
+import sampleFromList from './sampleFromList'
 
 const PUBLIC_API_KEY = 'dc6zaTOxFJmzC'
 
@@ -15,11 +14,7 @@ class GifRandomLibrary extends GifLibrary {
   }
 
   _getTag() {
-    let tagOrArray = sample(config.random.tags)
-    while (Array.isArray(tagOrArray)) {
-      tagOrArray = sample(tagOrArray)
-    }
-    return tagOrArray
+    return sampleFromList(config.sources.random.tags)
   }
 
   _getApiUrl() {
@@ -49,8 +44,12 @@ class GifRandomLibrary extends GifLibrary {
     .then(_requestData)
   }
 
-  isAllowed(urls) {
-    return this._history.isAllowed(urls)
+  canFetch(urls) {
+    return this._history.canFetch(urls)
+  }
+
+  canDisplay(urls) {
+    return this._history.canDisplay(urls)
   }
 
 }

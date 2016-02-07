@@ -1,6 +1,6 @@
 import config from './config'
 
-import sample from 'lodash/collection/sample'
+import sampleFromList from './sampleFromList'
 
 import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'
@@ -13,15 +13,11 @@ class GifRedditGifLibrary extends GifLibrary {
   }
 
   _getSubreddit() {
-    let tagOrArray = sample(config.reddit.subreddits)
-    while (Array.isArray(tagOrArray)) {
-      tagOrArray = sample(tagOrArray)
-    }
-    return tagOrArray
+    return sampleFromList(config.sources.reddit.subreddits)
   }
 
   _getApiUrl() {
-    return `http://api.reddit.com/r/${ this._getSubreddit() }/top.json?limit=${ config.reddit.limit }&t=${ config.reddit.time }`
+    return `http://api.reddit.com/r/${ this._getSubreddit() }/top.json?limit=${ config.sources.reddit.limit }&t=${ config.sources.reddit.time }`
   }
 
   getNextSet() {
@@ -37,7 +33,7 @@ class GifRedditGifLibrary extends GifLibrary {
     const _requestData = function(response) {
       return new Promise((resolve) => {
         response.json().then((json) => {
-          resolve(json.data.children[Math.floor(Math.random() * config.reddit.limit)].data.url.replace("http://imgur.com","http://i.imgur.com").replace("gifv", "gif"))
+          resolve(json.data.children[Math.floor(Math.random() * config.sources.reddit.limit)].data.url.replace("http://imgur.com","http://i.imgur.com").replace("gifv", "gif"))
         })
       })
     }
@@ -47,8 +43,12 @@ class GifRedditGifLibrary extends GifLibrary {
     .then(_requestData)
   }
 
-  isAllowed(urls) {
-    return this._history.isAllowed(urls)
+  canFetch(urls) {
+    return this._history.canFetch(urls)
+  }
+
+  canDisplay(urls) {
+    return this._history.canDisplay(urls)
   }
 
 }

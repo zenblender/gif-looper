@@ -92,9 +92,9 @@ class GifStaticLibrary extends GifLibrary {
         return flatten(Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray], true)
       })
       .map(urlAlternates => {
-        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.static.localUrlPrefix }${ url }`)
+        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.sources.static.localUrlPrefix }${ url }`)
         const remoteUrls  = urlAlternates.filter(isRemote)
-        return config.static.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
+        return config.sources.static.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
       })
     )
   }

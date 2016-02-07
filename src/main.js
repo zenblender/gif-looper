@@ -1,4 +1,7 @@
-import GifLooper from './gifLooper'
+import buildGifTable from './buildGifTable'
+import GifLooperMatrix from './gifLooperMatrix'
 
-new GifLooper(document.querySelector('#gifs')).start()
+buildGifTable()
+
+new GifLooperMatrix('.gif').start()
 
