@@ -1,5 +1,6 @@
 import config from './config'
 
+import getQueryString from './getQueryString'
 import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'
 import sampleFromList from './sampleFromList'
@@ -11,10 +12,11 @@ class GifRandomLibrary extends GifLibrary {
   constructor() {
     super()
     this._history = new GifHistory()
+    this._tags = getQueryString('tag') || config.sources.random.tags
   }
 
   _getTag() {
-    return sampleFromList(config.sources.random.tags)
+    return sampleFromList(this._tags)
   }
 
   _getApiUrl() {
