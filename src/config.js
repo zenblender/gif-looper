@@ -1,4 +1,6 @@
-export default {
+import configBuilder from './configBuilder'
+
+const config = {
   
   sourceType:               'random',
   rows:                     2,
@@ -13,6 +15,13 @@ export default {
 
   history: {
     numRememberedUrls:      200
+  },
+
+  browserOverrides: {
+    mobile: {
+      rows: 1,
+      cols: 1
+    }
   },
 
   sources: {
@@ -47,3 +56,5 @@ export default {
   }
 
 }
+
+export default configBuilder(config)
