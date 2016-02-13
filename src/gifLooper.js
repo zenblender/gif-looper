@@ -27,11 +27,17 @@ class GifLooper {
     }, 500)
   }
 
+  _clearContainer() {
+    while (this._container.firstChild) {
+      this._container.removeChild(this._container.firstChild)
+    }
+  }
+
   _displayGifImage(gifImage) {
     this._gifImage = gifImage
 
-    this._container.innerHTML = ''
-    this._container.appendChild(this._gifImage.image)
+    this._clearContainer()
+    this._container.appendChild(this._gifImage.element)
 
     this._currentStartMs = Date.now()
     this._wait()

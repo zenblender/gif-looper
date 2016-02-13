@@ -3,5 +3,5 @@ import GifLooperMatrix from './gifLooperMatrix'
 
 buildGifTable()
 
-new GifLooperMatrix('.gif').start()
+new GifLooperMatrix('.anim').start()
 

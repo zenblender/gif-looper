@@ -13,7 +13,7 @@ class GifDownloader {
     this._index         = 0
     this._gifImage      = null
     this._hasFailed     = false
-    this._fetchingUrls  = []
+    this._resetFetching()
 
     if (urlOrArrayOrPromise.then) {
 
@@ -43,24 +43,77 @@ class GifDownloader {
     return gifInfo.durationChrome
   }
 
+  _getExtensionFromUrl(url) {
+
+  }
+
   _createImgFromData(arrayBuffer) {
-    const promise = new Promise((resolve, reject) => {
-      const duration = this._getDuration(arrayBuffer)
-      const blob = new Blob([arrayBuffer], {type: "image/gif"})
-      const url = URL_CREATOR.createObjectURL(blob)
-      const img = new Image()
-      img.onload = () => {
-        URL_CREATOR.revokeObjectURL(url)
-        resolve(new GifImage(this._fetchingUrls, img, duration))
+    return new Promise((resolve, reject) => {
+      const duration = 5000 //this._getDuration(arrayBuffer)
+
+      const types = {
+        'gif': {
+          tagName:    'img',
+          mimeType:   'image/gif',
+          attribute:  'src'
+        },
+        'mp4': {
+          tagName:    'video',
+          attrs: {
+            preload:  'auto',
+            autoplay: true,
+            loop:     true,
+            muted:    true
+          },
+          mimeType:   'video/mp4',
+          attribute:  'src',
+          subElementTagName: 'source'
+        }
       }
-      img.onerror = () => {
+
+      const type = types.mp4
+
+      const blob = new Blob([arrayBuffer], { type: type.mimeType })
+      const url = URL_CREATOR.createObjectURL(blob)
+
+      const element = document.createElement(type.tagName)
+
+      const subElement = type.subElementTagName ? document.createElement(type.subElementTagName) : null
+
+      /*
+      const loadingElement = subElement || element
+
+      loadingElement.addEventListener('load', () => {
+        console.log('LOAD DONE')
+        URL_CREATOR.revokeObjectURL(url)
+        resolve(new GifImage(this._fetchingUrls, element, duration, type))
+      })
+      loadingElement.addEventListener('error', () => {
+        console.log('LOAD ERROR')
         URL_CREATOR.revokeObjectURL(url)
         reject('object url could not be loaded')
+      })
+      */
+
+      setImageStyle(element)
+
+      if (subElement) {
+        subElement.setAttribute(type.attribute, url)
+        subElement.setAttribute('type', type.mimeType)
+        element.appendChild(subElement)
+      } else {
+        element.setAttribute(type.attribute, url)
       }
-      setImageStyle(img)
-      img.src = url
+
+      if (type.attrs) {
+        Object.keys(type.attrs).forEach((key) => {
+          element.setAttribute(key, type.attrs[key])
+        })
+      }
+
+      resolve(new GifImage(this._fetchingUrls, element, duration, type))
+      
     })
-    return promise
   }
 
   _handleStatus(response) {
@@ -78,6 +131,7 @@ class GifDownloader {
   _fetchNext() {
     const url = this._urls[this._index]
     this._fetchingUrls = this._urls
+    this._fetchingUrl = url
 
     fetch(url)
     .then(this._handleStatus)
@@ -88,7 +142,7 @@ class GifDownloader {
   }
 
   _handleError(e) {
-    this._fetchingUrls = []
+    this._resetFetching()
     console.log('ERROR:', e)
     if (this._index < this._urls.length - 1) {
       console.log('attempting to load alternate...')
@@ -106,7 +160,12 @@ class GifDownloader {
 
   _finish(gifImage) {
     this._gifImage      = gifImage
-    this._fetchingUrls  = []
+    this._resetFetching()
+  }
+
+  _resetFetching() {
+    this._fetchingUrls = []
+    this._fetchingUrl = null
   }
 
   getGifImage() {

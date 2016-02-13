@@ -34,9 +34,13 @@ class GifRandomLibrary extends GifLibrary {
     }
 
     const _requestData = function(response) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         response.json().then((json) => {
-          resolve(json.data.image_url)
+          if (json.data.image_mp4_url || json.data.image_url) {
+            resolve(json.data.image_mp4_url || json.data.image_url)
+          } else {
+            reject()
+          }
         })
       })
     }

@@ -8,7 +8,7 @@ export default function() {
     const tr = document.createElement('tr')
     for (let c = 0; c < config.cols; c++) {
       const td = document.createElement('td')
-      td.classList.add('gif')
+      td.classList.add('anim')
 
       const loading = document.createElement('div')
       loading.classList.add('loading')
