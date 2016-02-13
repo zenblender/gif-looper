@@ -2,8 +2,7 @@ import gify from './gify'
 
 import GifImage from './gifImage'
 import setImageStyle from './setImageStyle'
-
-const URL_CREATOR = window.URL || window.webkitURL
+import urlCreator from './urlCreator'
 
 class GifDownloader {
 
@@ -74,7 +73,7 @@ class GifDownloader {
       const type = types.mp4
 
       const blob = new Blob([arrayBuffer], { type: type.mimeType })
-      const url = URL_CREATOR.createObjectURL(blob)
+      const url = urlCreator.createObjectURL(blob)
 
       const element = document.createElement(type.tagName)
 
@@ -111,7 +110,7 @@ class GifDownloader {
         })
       }
 
-      resolve(new GifImage(this._fetchingUrls, element, duration, type))
+      resolve(new GifImage(this._fetchingUrls, this._fetchingUrl, url, element, duration, type))
       
     })
   }

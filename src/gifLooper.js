@@ -39,6 +39,8 @@ class GifLooper {
     this._clearContainer()
     this._container.appendChild(this._gifImage.element)
 
+    this._gifImage.revokeObjectUrl()
+
     this._currentStartMs = Date.now()
     this._wait()
   }

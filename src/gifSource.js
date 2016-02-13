@@ -33,7 +33,7 @@ class GifSource {
 
   getGifImageToDisplay() {
     const gifImage = this._cacher.getNextGifImage()
-    if (gifImage && this._cacher.library.canDisplay(gifImage.urlList)) {
+    if (gifImage && this._cacher.library.canDisplay(gifImage.absoluteUrlList)) {
       return gifImage
     }
   }
