@@ -1,5 +1,6 @@
 import config from '../config'
 
+import getQueryString from '../utils/getQueryString'
 import sampleFromList from '../utils/sampleFromList'
 
 import UrlHistory from '../urlHistory'
@@ -10,10 +11,11 @@ class RedditUrlLibrary extends UrlLibrary {
   constructor() {
     super()
     this._history = new UrlHistory()
+    this._subreddits = getQueryString('subreddit') || config.sources.reddit.subreddits
   }
 
   _getSubreddit() {
-    return sampleFromList(config.sources.reddit.subreddits)
+    return sampleFromList(this._subreddits)
   }
 
   _getApiUrl() {
