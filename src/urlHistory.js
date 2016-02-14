@@ -1,6 +1,6 @@
 import config from './config'
 
-class GifHistory {
+class UrlHistory {
 
   constructor() {
     this._map = new Map()
@@ -42,4 +42,4 @@ class GifHistory {
   
 }
 
-export default GifHistory
+export default UrlHistory

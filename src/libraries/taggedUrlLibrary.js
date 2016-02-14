@@ -1,6 +1,6 @@
 import config from '../config'
 
-import GifHistory from '../gifHistory'
+import UrlHistory from '../urlHistory'
 import UrlLibrary from './urlLibrary'
 
 import getQueryString from '../utils/getQueryString'
@@ -19,7 +19,7 @@ class TaggedUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
-    this._history = new GifHistory()
+    this._history = new UrlHistory()
     this._tags = getQueryString('tag') || config.sources.tagged.tags
   }
 

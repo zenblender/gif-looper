@@ -2,14 +2,14 @@ import config from '../config'
 
 import sampleFromList from '../utils/sampleFromList'
 
-import GifHistory from '../gifHistory'
+import UrlHistory from '../urlHistory'
 import UrlLibrary from './urlLibrary'
 
 class RedditUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
-    this._history = new GifHistory()
+    this._history = new UrlHistory()
   }
 
   _getSubreddit() {
