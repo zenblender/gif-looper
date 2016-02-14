@@ -1,6 +1,6 @@
 import config from './config'
 
-class GifLooper {
+class AnimationView {
 
   constructor(container, source) {
     this._container       = container
@@ -72,4 +72,4 @@ class GifLooper {
 
 }
 
-export default GifLooper
+export default AnimationView

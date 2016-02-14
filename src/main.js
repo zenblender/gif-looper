@@ -1,7 +1,7 @@
 import buildGifTable from './buildGifTable'
-import GifLooperMatrix from './gifLooperMatrix'
+import AnimationGrid from './animationGrid'
 
 buildGifTable()
 
-new GifLooperMatrix('.anim').start()
+new AnimationGrid('.anim').start()
 
