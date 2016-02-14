@@ -1,6 +1,6 @@
 import config from './config'
 
-import GifDownloader from './gifDownloader'
+import AnimationDownloader from './animationDownloader'
 
 class GifCacher {
 
@@ -19,7 +19,7 @@ class GifCacher {
 
   _fillCache() {
     while (this._downloads.length < config.downloadsPerContainer) {
-      const download = new GifDownloader(this.library, this.library.getNextSet())
+      const download = new AnimationDownloader(this.library, this.library.getNextSet())
       this._downloads.push(download)
     }
   }

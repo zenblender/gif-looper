@@ -1,6 +1,6 @@
 import AnimationBuilderFactory from './builders/animationBuilderFactory'
 
-class GifDownloader {
+class AnimationDownloader {
 
   constructor(library, urlOrArrayOrPromise) {
     this._library       = library
@@ -33,10 +33,10 @@ class GifDownloader {
     }
   }
 
-  _createImgFromData(arrayBuffer) {
+  _createAnimationFromData(arrayBuffer) {
     return new Promise((resolve, reject) => {
-      const elementPromise = AnimationBuilderFactory.build(this._fetchingUrl, this._fetchingUrls, arrayBuffer)
-      resolve(elementPromise)
+      const animationPromise = AnimationBuilderFactory.build(this._fetchingUrl, this._fetchingUrls, arrayBuffer)
+      resolve(animationPromise)
     })
   }
 
@@ -60,7 +60,7 @@ class GifDownloader {
     fetch(url)
     .then(this._handleStatus)
     .then(this._requestData)
-    .then(this._createImgFromData.bind(this))
+    .then(this._createAnimationFromData.bind(this))
     .then(this._finish.bind(this))
     .catch(this._handleError.bind(this))
   }
@@ -106,4 +106,4 @@ class GifDownloader {
 
 }
 
-export default GifDownloader
+export default AnimationDownloader
