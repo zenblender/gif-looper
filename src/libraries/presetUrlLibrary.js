@@ -1,9 +1,9 @@
-import config from './config'
+import config from '../config'
 
 import flatten from 'lodash/array/flatten'
 import shuffle from 'lodash/collection/shuffle'
 
-import GifLibrary from './gifLibrary'
+import UrlLibrary from './urlLibrary'
 
 const URLS = [
   ['cat-double-take.gif', 'https://media.giphy.com/media/Zg44yLGbvXCjm/giphy.gif'],
@@ -68,12 +68,12 @@ const URLS = [
   'https://media.giphy.com/media/AAHUIzS2Oo8UM/giphy.gif'
 ]
 
-class GifStaticLibrary extends GifLibrary {
+class PresetUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
     this._gifIndex = -1
-    this._gifs = GifStaticLibrary._build(URLS)
+    this._gifs = PresetUrlLibrary._build(URLS)
   }
 
   static _build(urls) {
@@ -92,9 +92,9 @@ class GifStaticLibrary extends GifLibrary {
         return flatten(Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray], true)
       })
       .map(urlAlternates => {
-        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.sources.static.localUrlPrefix }${ url }`)
+        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.sources.preset.localUrlPrefix }${ url }`)
         const remoteUrls  = urlAlternates.filter(isRemote)
-        return config.sources.static.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
+        return config.sources.preset.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
       })
     )
   }
@@ -108,4 +108,4 @@ class GifStaticLibrary extends GifLibrary {
 
 }
 
-export default GifStaticLibrary
+export default PresetUrlLibrary

@@ -1,11 +1,11 @@
-import config from './config'
+import config from '../config'
 
-import sampleFromList from './utils/sampleFromList'
+import sampleFromList from '../utils/sampleFromList'
 
-import GifHistory from './gifHistory'
-import GifLibrary from './gifLibrary'
+import GifHistory from '../gifHistory'
+import UrlLibrary from './urlLibrary'
 
-class GifRedditGifLibrary extends GifLibrary {
+class RedditUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
@@ -53,4 +53,4 @@ class GifRedditGifLibrary extends GifLibrary {
 
 }
 
-export default GifRedditGifLibrary
+export default RedditUrlLibrary

@@ -1,10 +1,10 @@
-import config from './config'
+import config from '../config'
 
-import GifHistory from './gifHistory'
-import GifLibrary from './gifLibrary'
+import GifHistory from '../gifHistory'
+import UrlLibrary from './urlLibrary'
 
-import getQueryString from './utils/getQueryString'
-import sampleFromList from './utils/sampleFromList'
+import getQueryString from '../utils/getQueryString'
+import sampleFromList from '../utils/sampleFromList'
 
 const PUBLIC_API_KEY = 'dc6zaTOxFJmzC'
 
@@ -15,12 +15,12 @@ const FILE_FORMAT_KEYS = {
 
 const DEFAULT_FILE_FORMAT = 'gif'
 
-class GifRandomLibrary extends GifLibrary {
+class TaggedUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
     this._history = new GifHistory()
-    this._tags = getQueryString('tag') || config.sources.random.tags
+    this._tags = getQueryString('tag') || config.sources.tagged.tags
   }
 
   _getTag() {
@@ -34,7 +34,7 @@ class GifRandomLibrary extends GifLibrary {
   getNextSet() {
 
     const _getPreferredUrl = (json) => {
-      const preferredFileFormat = config.sources.random.preferredFileFormat
+      const preferredFileFormat = config.sources.tagged.preferredFileFormat
       if (preferredFileFormat && json.data[FILE_FORMAT_KEYS[preferredFileFormat]]) {
         return json.data[FILE_FORMAT_KEYS[preferredFileFormat]]
       }
@@ -80,4 +80,4 @@ class GifRandomLibrary extends GifLibrary {
 
 }
 
-export default GifRandomLibrary
+export default TaggedUrlLibrary

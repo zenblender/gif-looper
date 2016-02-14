@@ -2,7 +2,7 @@ import configBuilder from './configBuilder'
 
 const config = {
   
-  sourceType:               'random',
+  sourceType:               'tagged',
   rows:                     2,
   cols:                     2,
   minDurationMs:            1500,
@@ -26,7 +26,7 @@ const config = {
 
   sources: {
 
-    random: {
+    tagged: {
       preferredFileFormat:  'gif',
       tags: [
         ['funny', 'fun', 'hilarious', 'silly'],
@@ -49,7 +49,7 @@ const config = {
       subreddits: ['gifs','perfectloops']
     },
 
-    static: {
+    preset: {
       localUrlPrefix:         'gifs/',
       preferLocalFiles:       false
     }

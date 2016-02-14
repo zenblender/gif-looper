@@ -1,4 +1,4 @@
-class GifLibrary {
+class UrlLibrary {
   
   getNextSet() {
     // override me
@@ -16,4 +16,4 @@ class GifLibrary {
 
 }
 
-export default GifLibrary
+export default UrlLibrary

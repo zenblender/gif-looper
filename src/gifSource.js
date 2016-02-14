@@ -1,15 +1,15 @@
 import config from './config'
 
-import GifRandomLibrary from './gifRandomLibrary'
-import GifRedditGifLibrary from './gifRedditGifLibrary'
-import GifStaticLibrary from './gifStaticLibrary'
+import TaggedUrlLibrary from './libraries/taggedUrlLibrary'
+import RedditUrlLibrary from './libraries/redditUrlLibrary'
+import PresetUrlLibrary from './libraries/presetUrlLibrary'
 import GifRandomCacher from './gifRandomCacher'
 import GifSequentialCacher from './gifSequentialCacher'
 
 const TYPES = {
-  'random': () => new GifSource(new GifRandomLibrary(), new GifRandomCacher()),
-  'reddit': () => new GifSource(new GifRedditGifLibrary(), new GifRandomCacher()),
-  'static': () => new GifSource(new GifStaticLibrary(), new GifSequentialCacher())
+  'tagged': () => new GifSource(new TaggedUrlLibrary(), new GifRandomCacher()),
+  'reddit': () => new GifSource(new RedditUrlLibrary(), new GifRandomCacher()),
+  'preset': () => new GifSource(new PresetUrlLibrary(), new GifSequentialCacher())
 }
 
 class GifSource {
