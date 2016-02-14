@@ -1,7 +1,7 @@
-import buildGifTable from './buildGifTable'
+import renderAnimationGrid from './renderAnimationGrid'
 import AnimationGrid from './animationGrid'
 
-buildGifTable()
+renderAnimationGrid()
 
 new AnimationGrid('.anim').start()
 
