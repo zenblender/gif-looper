@@ -1,5 +1,9 @@
 import bowser from 'bowser'
 
+import getQueryString from './utils/getQueryString'
+
+const ALLOWED_QUERY_PARAMS = ['rows', 'cols']
+
 export default function (config) {  
   if (config.browserOverrides) {
     Object.keys(config.browserOverrides).forEach((bowserKey) => {
@@ -8,5 +12,13 @@ export default function (config) {
       }
     })
   }
+
+  ALLOWED_QUERY_PARAMS.forEach((paramName) => {
+    const paramValue = getQueryString(paramName)
+    if (paramValue || typeof paramValue === 'string' || typeof paramValue === 'number') {
+      config[paramName] = paramValue
+    }
+  })
+
   return config
 }
