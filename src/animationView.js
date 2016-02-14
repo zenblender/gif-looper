@@ -55,10 +55,10 @@ class AnimationView {
   _wait() {
     const now = Date.now()
 
-    const gifMinDurationMs =
+    const minDurationMs =
       Math.ceil(config.minDurationMs / this._animation.duration) * this._animation.duration
 
-    let nextEligibleStopTimeMs = this._currentStartMs + gifMinDurationMs
+    let nextEligibleStopTimeMs = this._currentStartMs + minDurationMs
     while (nextEligibleStopTimeMs < now) {
       nextEligibleStopTimeMs += this._animation.duration
     }

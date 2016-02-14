@@ -72,8 +72,8 @@ class PresetUrlLibrary extends UrlLibrary {
 
   constructor() {
     super()
-    this._gifIndex = -1
-    this._gifs = PresetUrlLibrary._build(URLS)
+    this._urlIndex = -1
+    this._urls = PresetUrlLibrary._build(URLS)
   }
 
   static _build(urls) {
@@ -100,9 +100,9 @@ class PresetUrlLibrary extends UrlLibrary {
   }
 
   getNextSet() {
-    if (this._gifs.length) {
-      this._gifIndex = (this._gifIndex + 1) % this._gifs.length
-      return this._gifs[this._gifIndex]
+    if (this._urls.length) {
+      this._urlIndex = (this._urlIndex + 1) % this._urls.length
+      return this._urls[this._urlIndex]
     }
   }
 
