@@ -5,7 +5,7 @@ import GifCacher from './gifCacher'
 
 class GifRandomCacher extends GifCacher {
   
-  getNextGifImage() {
+  getNextAnimation() {
 
     const removeIndex = (index) => {
       this._downloads.splice(index, 1)
@@ -15,24 +15,24 @@ class GifRandomCacher extends GifCacher {
       this._downloads = this._downloads.filter(download => !download.hasFailed())
     }
 
-    const getRandomCompletedGifIndex = () => {
+    const getRandomCompletedAnimation = () => {
       return shuffle(range(this._downloads.length))
-        .find(index => this._downloads[index].hasGifImage())
+        .find(index => this._downloads[index].hasAnimation())
     }
 
-    let gifImage = null
+    let animation = null
 
     removeFailed()
 
-    const gifImageIndex = getRandomCompletedGifIndex()
-    if (gifImageIndex !== undefined) {
-      gifImage = this._downloads[gifImageIndex].getGifImage()
-      removeIndex(gifImageIndex)
+    const animationIndex = getRandomCompletedAnimation()
+    if (animationIndex !== undefined) {
+      animation = this._downloads[animationIndex].getAnimation()
+      removeIndex(animationIndex)
     }
 
     this._fillCache()
 
-    return gifImage
+    return animation
   }
 
 }

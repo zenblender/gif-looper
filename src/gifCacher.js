@@ -24,7 +24,7 @@ class GifCacher {
     }
   }
 
-  getNextGifImage() {
+  getNextAnimation() {
     // override me
   }
   

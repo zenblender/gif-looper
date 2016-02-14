@@ -1,3 +1,5 @@
+require('./polyfills')
+
 import GifLooper from './gifLooper'
 import GifSource from './gifSource'
 

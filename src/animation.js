@@ -1,14 +1,13 @@
-import urlCreator from './urlCreator'
+import urlCreator from './utils/urlCreator'
 
-class GifImage {
+class Animation {
 
-  constructor(absoluteUrlList, absoluteUrl, objectUrl, element, duration, type) {
+  constructor(absoluteUrlList, absoluteUrl, objectUrl, element, duration) {
     this.absoluteUrlList  = absoluteUrlList
     this.absoluteUrl      = absoluteUrl
     this._objectUrl       = objectUrl
     this.element          = element
     this.duration         = duration
-    this.type             = type
   }
 
   revokeObjectUrl() {
@@ -18,4 +17,4 @@ class GifImage {
   
 }
 
-export default GifImage
+export default Animation

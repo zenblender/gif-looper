@@ -1,8 +1,4 @@
-import gify from './gify'
-
-import GifImage from './gifImage'
-import setImageStyle from './setImageStyle'
-import urlCreator from './urlCreator'
+import AnimationBuilderFactory from './builders/animationBuilderFactory'
 
 class GifDownloader {
 
@@ -10,7 +6,7 @@ class GifDownloader {
     this._library       = library
 
     this._index         = 0
-    this._gifImage      = null
+    this._animation     = null
     this._hasFailed     = false
     this._resetFetching()
 
@@ -37,26 +33,20 @@ class GifDownloader {
     }
   }
 
-  _getDuration(arrayBuffer) {
-    const gifInfo = gify.getInfo(arrayBuffer)
-    return gifInfo.durationChrome
-  }
-
-  _getExtensionFromUrl(url) {
-
-  }
-
   _createImgFromData(arrayBuffer) {
     return new Promise((resolve, reject) => {
-      const duration = 5000 //this._getDuration(arrayBuffer)
+      const elementPromise = AnimationBuilderFactory.build(this._fetchingUrl, this._fetchingUrls, arrayBuffer)
+      resolve(elementPromise)
+      // const duration = 5000 //this._getDuration(arrayBuffer)
 
+      /*
       const types = {
-        'gif': {
+        gif: {
           tagName:    'img',
           mimeType:   'image/gif',
           attribute:  'src'
         },
-        'mp4': {
+        mp4: {
           tagName:    'video',
           attrs: {
             preload:  'auto',
@@ -78,6 +68,7 @@ class GifDownloader {
       const element = document.createElement(type.tagName)
 
       const subElement = type.subElementTagName ? document.createElement(type.subElementTagName) : null
+      */
 
       /*
       const loadingElement = subElement || element
@@ -85,7 +76,7 @@ class GifDownloader {
       loadingElement.addEventListener('load', () => {
         console.log('LOAD DONE')
         URL_CREATOR.revokeObjectURL(url)
-        resolve(new GifImage(this._fetchingUrls, element, duration, type))
+        resolve(new Animation(this._fetchingUrls, element, duration, type))
       })
       loadingElement.addEventListener('error', () => {
         console.log('LOAD ERROR')
@@ -93,25 +84,6 @@ class GifDownloader {
         reject('object url could not be loaded')
       })
       */
-
-      setImageStyle(element)
-
-      if (subElement) {
-        subElement.setAttribute(type.attribute, url)
-        subElement.setAttribute('type', type.mimeType)
-        element.appendChild(subElement)
-      } else {
-        element.setAttribute(type.attribute, url)
-      }
-
-      if (type.attrs) {
-        Object.keys(type.attrs).forEach((key) => {
-          element.setAttribute(key, type.attrs[key])
-        })
-      }
-
-      resolve(new GifImage(this._fetchingUrls, this._fetchingUrl, url, element, duration, type))
-      
     })
   }
 
@@ -157,8 +129,8 @@ class GifDownloader {
     this._hasFailed = true
   }
 
-  _finish(gifImage) {
-    this._gifImage      = gifImage
+  _finish(animation) {
+    this._animation = animation
     this._resetFetching()
   }
 
@@ -167,12 +139,12 @@ class GifDownloader {
     this._fetchingUrl = null
   }
 
-  getGifImage() {
-    return this._gifImage
+  getAnimation() {
+    return this._animation
   }
 
-  hasGifImage() {
-    return !!this._gifImage
+  hasAnimation() {
+    return !!this._animation
   }
 
   hasFailed() {

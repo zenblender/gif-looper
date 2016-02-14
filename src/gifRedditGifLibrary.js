@@ -1,6 +1,6 @@
 import config from './config'
 
-import sampleFromList from './sampleFromList'
+import sampleFromList from './utils/sampleFromList'
 
 import GifHistory from './gifHistory'
 import GifLibrary from './gifLibrary'

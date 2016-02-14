@@ -27,7 +27,8 @@ const config = {
   sources: {
 
     random: {
-      tags:                 [
+      preferredFileFormat:  'gif',
+      tags: [
         ['funny', 'fun', 'hilarious', 'silly'],
         ['weird', 'absurd', 'strange', 'crazy', 'wtf'],
         'fail',

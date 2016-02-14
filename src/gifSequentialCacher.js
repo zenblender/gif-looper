@@ -2,22 +2,22 @@ import GifCacher from './gifCacher'
 
 class GifSequentialCacher extends GifCacher {
 
-  getNextGifImage() {
+  getNextAnimation() {
 
     const removeFirst = () => {
       this._downloads.splice(0, 1)
     }
 
-    let gifImage = null
+    let animation = null
 
     if (this._downloads.length) {
       const firstDownload = this._downloads[0]
       if (firstDownload.hasFailed()) {
         removeFirst()
-        return this.getNextGifImage()
+        return this.getNextAnimation()
       } else {
-        gifImage = firstDownload.getGifImage()
-        if (gifImage) {
+        animation = firstDownload.getAnimation()
+        if (animation) {
           removeFirst()
         }
       }
@@ -25,7 +25,7 @@ class GifSequentialCacher extends GifCacher {
 
     this._fillCache()
 
-    return gifImage
+    return animation
   }
   
 }

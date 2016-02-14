@@ -31,10 +31,10 @@ class GifSource {
     this._cacher.start()
   }
 
-  getGifImageToDisplay() {
-    const gifImage = this._cacher.getNextGifImage()
-    if (gifImage && this._cacher.library.canDisplay(gifImage.absoluteUrlList)) {
-      return gifImage
+  getAnimationToDisplay() {
+    const animation = this._cacher.getNextAnimation()
+    if (animation && this._cacher.library.canDisplay(animation.absoluteUrlList)) {
+      return animation
     }
   }
   

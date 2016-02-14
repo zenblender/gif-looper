@@ -1,5 +1,3 @@
-require('./polyfill')
-
 import config from './config'
 
 class GifLooper {
@@ -7,7 +5,7 @@ class GifLooper {
   constructor(container, source) {
     this._container       = container
     this._source          = source
-    this._gifImage        = null
+    this._animation       = null
     this._currentStartMs  = null
   }
 
@@ -18,9 +16,9 @@ class GifLooper {
 
   _waitForFirstDownload() {
     setTimeout(() => {
-      const gifImage = this._source.getGifImageToDisplay()
-      if (gifImage) {
-        this._displayGifImage(gifImage)
+      const animation = this._source.getAnimationToDisplay()
+      if (animation) {
+        this._displayAnimation(animation)
       } else {
         this._waitForFirstDownload()
       }
@@ -33,22 +31,22 @@ class GifLooper {
     }
   }
 
-  _displayGifImage(gifImage) {
-    this._gifImage = gifImage
+  _displayAnimation(animation) {
+    this._animation = animation
 
     this._clearContainer()
-    this._container.appendChild(this._gifImage.element)
+    this._container.appendChild(this._animation.element)
 
-    this._gifImage.revokeObjectUrl()
+    this._animation.revokeObjectUrl()
 
     this._currentStartMs = Date.now()
     this._wait()
   }
 
   _maybeDisplayNext() {
-    const gifImage = this._source.getGifImageToDisplay()
-    if (gifImage) {
-      this._displayGifImage(gifImage)
+    const animation = this._source.getAnimationToDisplay()
+    if (animation) {
+      this._displayAnimation(animation)
     } else {
       this._wait()
     }
@@ -58,11 +56,11 @@ class GifLooper {
     const now = Date.now()
 
     const gifMinDurationMs =
-      Math.ceil(config.minDurationMs / this._gifImage.duration) * this._gifImage.duration
+      Math.ceil(config.minDurationMs / this._animation.duration) * this._animation.duration
 
     let nextEligibleStopTimeMs = this._currentStartMs + gifMinDurationMs
     while (nextEligibleStopTimeMs < now) {
-      nextEligibleStopTimeMs += this._gifImage.duration
+      nextEligibleStopTimeMs += this._animation.duration
     }
 
     const newDelayMs = nextEligibleStopTimeMs - now
