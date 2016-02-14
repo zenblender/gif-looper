@@ -31,7 +31,7 @@ class TaggedUrlLibrary extends UrlLibrary {
     return `http://api.giphy.com/v1/gifs/random?tag=${ this._getTag() }&api_key=${ PUBLIC_API_KEY }`
   }
 
-  getNextSet() {
+  getNextUrl() {
 
     const _getPreferredUrl = (json) => {
       const preferredFileFormat = config.sources.tagged.preferredFileFormat
@@ -70,12 +70,12 @@ class TaggedUrlLibrary extends UrlLibrary {
     .then(_requestData)
   }
 
-  canFetch(urls) {
-    return this._history.canFetch(urls)
+  canFetch(url) {
+    return this._history.canFetch(url)
   }
 
-  canDisplay(urls) {
-    return this._history.canDisplay(urls)
+  canDisplay(url) {
+    return this._history.canDisplay(url)
   }
 
 }

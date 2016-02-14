@@ -1,6 +1,6 @@
 class UrlLibrary {
   
-  getNextSet() {
+  getNextUrl() {
     // override me
   }
 

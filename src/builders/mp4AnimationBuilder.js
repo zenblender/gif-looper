@@ -23,7 +23,7 @@ class Mp4AnimationBuilder extends AnimationBuilder {
     })
   }
 
-  build(urls, url, arrayBuffer) {
+  build(url, arrayBuffer) {
 
     const objectUrl = this._getObjectUrl(arrayBuffer)
 
@@ -43,7 +43,7 @@ class Mp4AnimationBuilder extends AnimationBuilder {
 
     return new Promise((resolve) => {
       this._getDuration(arrayBuffer).then((duration) => {
-        const animation = new Animation(urls, url, objectUrl, videoElement, duration)
+        const animation = new Animation(url, objectUrl, videoElement, duration)
         resolve(animation)
       })
     })

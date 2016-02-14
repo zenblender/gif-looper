@@ -24,7 +24,7 @@ class RedditUrlLibrary extends UrlLibrary {
 
   _getApiUrl() {
     const cacheBreaker = Math.floor(Math.random() * 100000)
-    return `http://api.reddit.com/r/${ this._getSubreddit() }/random?${ cacheBreaker }`
+    return `http://api.reddit.com/r/${ this._getSubreddit() }/random?cb=${ cacheBreaker }`
   }
 
   _getAnimationUrl(json) {
@@ -50,7 +50,7 @@ class RedditUrlLibrary extends UrlLibrary {
     }
   }
 
-  getNextSet() {
+  getNextUrl() {
 
     const _handleStatus = (response) => {
       if (response.statusText === 'OK') {
@@ -78,12 +78,12 @@ class RedditUrlLibrary extends UrlLibrary {
     .then(_requestData)
   }
 
-  canFetch(urls) {
-    return this._history.canFetch(urls)
+  canFetch(url) {
+    return this._history.canFetch(url)
   }
 
-  canDisplay(urls) {
-    return this._history.canDisplay(urls)
+  canDisplay(url) {
+    return this._history.canDisplay(url)
   }
 
 }

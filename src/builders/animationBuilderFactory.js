@@ -17,11 +17,11 @@ class AnimationBuilderFactory {
     }
   }
 
-  static build(url, urls, arrayBuffer) {
+  static build(url, arrayBuffer) {
     return new Promise((resolve, reject) => {
       const builder = AnimationBuilderFactory.getBuilder(url)
       if (builder) {
-        resolve(builder.build(urls, url, arrayBuffer))
+        resolve(builder.build(url, arrayBuffer))
       } else {
         reject()
       }

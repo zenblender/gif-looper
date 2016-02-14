@@ -2,41 +2,40 @@ import AnimationBuilderFactory from './builders/animationBuilderFactory'
 
 class AnimationDownloader {
 
-  constructor(library, urlOrArrayOrPromise) {
+  constructor(library, urlOrPromise) {
     this._library       = library
 
-    this._urls          = []
-    this._index         = 0
+    this._url           = null
     this._animation     = null
     this._hasFailed     = false
-    this._resetFetching()
+    this._isFetching    = false
 
-    if (urlOrArrayOrPromise.then) {
+    if (urlOrPromise.then) {
 
       // promise provided
-      urlOrArrayOrPromise
-      .then(this._handleUrlOrArray.bind(this))
+      urlOrPromise
+      .then(this._handleUrl.bind(this))
       .catch(this._handleError.bind(this))
 
     } else {
 
-      this._handleUrlOrArray(urlOrArrayOrPromise)
+      this._handleUrl(urlOrPromise)
 
     }
   }
 
-  _handleUrlOrArray(urlOrArray) {
-    this._urls = Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray]
-    if (this._library.canFetch(this._urls)) {
-      this._fetchNext()  
+  _handleUrl(url) {
+    this._url = url
+    if (this._library.canFetch(this._url)) {
+      this._fetchUrl()  
     } else {
       this._fail('url used recently')
     }
   }
 
   _createAnimationFromData(arrayBuffer) {
-    return new Promise((resolve, reject) => {
-      const animationPromise = AnimationBuilderFactory.build(this._fetchingUrl, this._fetchingUrls, arrayBuffer)
+    return new Promise((resolve) => {
+      const animationPromise = AnimationBuilderFactory.build(this._url, arrayBuffer)
       resolve(animationPromise)
     })
   }
@@ -45,7 +44,7 @@ class AnimationDownloader {
     if (response.statusText === 'OK') {
       return Promise.resolve(response)
     } else {
-      return Promise.reject('image could not be grabbed')
+      return Promise.reject(`HTTP Status: ${ response.statusText }`)
     }
   }
 
@@ -53,44 +52,34 @@ class AnimationDownloader {
     return Promise.resolve(response.arrayBuffer())
   }
 
-  _fetchNext() {
-    const url = this._urls[this._index]
-    this._fetchingUrls = this._urls
-    this._fetchingUrl = url
+  _fetchUrl() {
+    this._isFetching = true
 
-    fetch(url)
-    .then(this._handleStatus)
-    .then(this._requestData)
-    .then(this._createAnimationFromData.bind(this))
-    .then(this._finish.bind(this))
-    .catch(this._handleError.bind(this))
-  }
-
-  _handleError(e) {
-    this._resetFetching()
-    console.log('ERROR:', e)
-    if (this._urls.length && this._index < this._urls.length - 1) {
-      console.log('attempting to load alternate...')
-      this._index++
-      this._fetchNext()
+    if (this._url) {
+      fetch(this._url)
+      .then(this._handleStatus)
+      .then(this._requestData)
+      .then(this._createAnimationFromData.bind(this))
+      .then(this._finish.bind(this))
+      .catch(this._handleError.bind(this))
     } else {
-      this._fail('no more URLs to try')
+      this._fail('url not available')
     }
   }
 
+  _handleError(e) {
+    this._fail(`could not fetch ${ this._url }`)
+  }
+
   _fail(reason) {
-    console.log(reason)
+    console.log(`DOWNLOADER ERROR: ${ reason }`)
     this._hasFailed = true
+    this._isFetching = false
   }
 
   _finish(animation) {
     this._animation = animation
-    this._resetFetching()
-  }
-
-  _resetFetching() {
-    this._fetchingUrls = []
-    this._fetchingUrl = null
+    this._isFetching = false
   }
 
   getAnimation() {

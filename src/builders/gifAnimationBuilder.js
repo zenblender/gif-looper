@@ -16,7 +16,7 @@ class GifAnimationBuilder extends AnimationBuilder {
     return gifInfo.durationChrome
   }
 
-  build(urls, url, arrayBuffer) {
+  build(url, arrayBuffer) {
 
     const objectUrl = this._getObjectUrl(arrayBuffer)
 
@@ -26,7 +26,7 @@ class GifAnimationBuilder extends AnimationBuilder {
     this._setElementStyle(imgElement)
 
     return Promise.resolve(
-      new Animation(urls, url, objectUrl, imgElement, this._getDuration(arrayBuffer))
+      new Animation(url, objectUrl, imgElement, this._getDuration(arrayBuffer))
     )
       /*
       const loadingElement = subElement || element

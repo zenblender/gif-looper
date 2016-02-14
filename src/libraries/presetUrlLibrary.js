@@ -6,14 +6,14 @@ import shuffle from 'lodash/collection/shuffle'
 import UrlLibrary from './urlLibrary'
 
 const URLS = [
-  ['cat-double-take.gif', 'https://media.giphy.com/media/Zg44yLGbvXCjm/giphy.gif'],
-  ['chewbacca-smash.gif', 'https://media.giphy.com/media/10juQ7fAaQjuHS/giphy.gif'],
-  ['pool-slide-fail.gif', 'https://media.giphy.com/media/EG7bbilpEg6nS/giphy.gif'],
-  ['cat-drinking.gif', 'https://media.giphy.com/media/WXNqe78uXxmKs/giphy.gif'],
-  ['bar-worm.gif', 'https://media.giphy.com/media/xTk9ZEXFhScuvjX9bW/giphy.gif'],
-  ['sabrina-cat-slap.gif', 'https://media.giphy.com/media/eHHjV2uahglMY/giphy.gif'],
-  ['dog-crazy-tongue.gif', 'https://media.giphy.com/media/z66wZincEFYYg/giphy.gif'],
-  ['creepy-sports-cheer.gif', 'https://media.giphy.com/media/11LplzzRswXDgs/giphy.gif'],
+  'https://media.giphy.com/media/Zg44yLGbvXCjm/giphy.gif',
+  'https://media.giphy.com/media/10juQ7fAaQjuHS/giphy.gif',
+  'https://media.giphy.com/media/EG7bbilpEg6nS/giphy.gif',
+  'https://media.giphy.com/media/WXNqe78uXxmKs/giphy.gif',
+  'https://media.giphy.com/media/xTk9ZEXFhScuvjX9bW/giphy.gif',
+  'https://media.giphy.com/media/eHHjV2uahglMY/giphy.gif',
+  'https://media.giphy.com/media/z66wZincEFYYg/giphy.gif',
+  'https://media.giphy.com/media/11LplzzRswXDgs/giphy.gif',
   'http://media.giphy.com/media/KOS39Lrl3c4iA/giphy.gif',
   'http://media.giphy.com/media/6JvVrxP6osBdC/giphy.gif',
   'http://media.giphy.com/media/gzeYiFabZIteo/giphy.gif',
@@ -78,28 +78,15 @@ class PresetUrlLibrary extends UrlLibrary {
 
   static _build(urls) {
 
-    const isRemote = function(url) {
-      return url.match(/^http/i)
+    const getAbsoluteUrl = function(url) {
+      const isRemote = !!url.match(/^http/i)
+      return isRemote ? url : `${ config.sources.preset.localUrlPrefix }${ url }`
     }
 
-    const isLocal = function(url) {
-      return !isRemote(url)
-    }
-
-    return shuffle(
-      urls
-      .map(urlOrArray => {
-        return flatten(Array.isArray(urlOrArray) ? urlOrArray : [urlOrArray], true)
-      })
-      .map(urlAlternates => {
-        const localUrls   = urlAlternates.filter(isLocal).map(url => `${ config.sources.preset.localUrlPrefix }${ url }`)
-        const remoteUrls  = urlAlternates.filter(isRemote)
-        return config.sources.preset.preferLocalFiles ? localUrls.concat(remoteUrls) : remoteUrls.concat(localUrls)
-      })
-    )
+    return shuffle(urls.map(getAbsoluteUrl))
   }
 
-  getNextSet() {
+  getNextUrl() {
     if (this._urls.length) {
       this._urlIndex = (this._urlIndex + 1) % this._urls.length
       return this._urls[this._urlIndex]

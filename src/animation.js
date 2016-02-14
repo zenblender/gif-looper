@@ -2,12 +2,11 @@ import urlCreator from './utils/urlCreator'
 
 class Animation {
 
-  constructor(absoluteUrlList, absoluteUrl, objectUrl, element, duration) {
-    this.absoluteUrlList  = absoluteUrlList
-    this.absoluteUrl      = absoluteUrl
-    this._objectUrl       = objectUrl
-    this.element          = element
-    this.duration         = duration
+  constructor(absoluteUrl, objectUrl, element, duration) {
+    this.absoluteUrl = absoluteUrl
+    this._objectUrl  = objectUrl
+    this.element     = element
+    this.duration    = duration
   }
 
   revokeObjectUrl() {

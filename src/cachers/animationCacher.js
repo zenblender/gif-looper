@@ -19,7 +19,7 @@ class AnimationCacher {
 
   _fillCache() {
     while (this._downloaders.length < config.simultaneousDownloads) {
-      const downloader = new AnimationDownloader(this.library, this.library.getNextSet())
+      const downloader = new AnimationDownloader(this.library, this.library.getNextUrl())
       this._downloaders.push(downloader)
     }
   }

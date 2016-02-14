@@ -50,8 +50,7 @@ const config = {
     },
 
     preset: {
-      localUrlPrefix:         'gifs/',
-      preferLocalFiles:       false
+      localUrlPrefix:         'gifs/'
     }
 
   }

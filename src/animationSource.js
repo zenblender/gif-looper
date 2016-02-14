@@ -34,7 +34,7 @@ class AnimationSource {
 
   getAnimationToDisplay() {
     const animation = this._cacher.getNextAnimation()
-    if (animation && this._cacher.library.canDisplay(animation.absoluteUrlList)) {
+    if (animation && this._cacher.library.canDisplay(animation.absoluteUrl)) {
       return animation
     }
   }
