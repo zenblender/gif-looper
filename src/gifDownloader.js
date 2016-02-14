@@ -37,53 +37,6 @@ class GifDownloader {
     return new Promise((resolve, reject) => {
       const elementPromise = AnimationBuilderFactory.build(this._fetchingUrl, this._fetchingUrls, arrayBuffer)
       resolve(elementPromise)
-      // const duration = 5000 //this._getDuration(arrayBuffer)
-
-      /*
-      const types = {
-        gif: {
-          tagName:    'img',
-          mimeType:   'image/gif',
-          attribute:  'src'
-        },
-        mp4: {
-          tagName:    'video',
-          attrs: {
-            preload:  'auto',
-            autoplay: true,
-            loop:     true,
-            muted:    true
-          },
-          mimeType:   'video/mp4',
-          attribute:  'src',
-          subElementTagName: 'source'
-        }
-      }
-
-      const type = types.mp4
-
-      const blob = new Blob([arrayBuffer], { type: type.mimeType })
-      const url = urlCreator.createObjectURL(blob)
-
-      const element = document.createElement(type.tagName)
-
-      const subElement = type.subElementTagName ? document.createElement(type.subElementTagName) : null
-      */
-
-      /*
-      const loadingElement = subElement || element
-
-      loadingElement.addEventListener('load', () => {
-        console.log('LOAD DONE')
-        URL_CREATOR.revokeObjectURL(url)
-        resolve(new Animation(this._fetchingUrls, element, duration, type))
-      })
-      loadingElement.addEventListener('error', () => {
-        console.log('LOAD ERROR')
-        URL_CREATOR.revokeObjectURL(url)
-        reject('object url could not be loaded')
-      })
-      */
     })
   }
 
