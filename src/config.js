@@ -6,7 +6,7 @@ const config = {
   rows:                     2,
   cols:                     2,
   minDurationMs:            1500,
-  downloadsPerContainer:    3,
+  simultaneousDownloads:    3,
 
   style: {
     objectFit:              'cover',

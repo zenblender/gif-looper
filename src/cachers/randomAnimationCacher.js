@@ -1,23 +1,23 @@
 import range from 'lodash/utility/range'
 import shuffle from 'lodash/collection/shuffle'
 
-import GifCacher from './gifCacher'
+import AnimationCacher from './animationCacher'
 
-class GifRandomCacher extends GifCacher {
+class RandomAnimationCacher extends AnimationCacher {
   
   getNextAnimation() {
 
     const removeIndex = (index) => {
-      this._downloads.splice(index, 1)
+      this._downloaders.splice(index, 1)
     }
 
     const removeFailed = () => {
-      this._downloads = this._downloads.filter(download => !download.hasFailed())
+      this._downloaders = this._downloaders.filter(download => !download.hasFailed())
     }
 
     const getRandomCompletedAnimation = () => {
-      return shuffle(range(this._downloads.length))
-        .find(index => this._downloads[index].hasAnimation())
+      return shuffle(range(this._downloaders.length))
+        .find(index => this._downloaders[index].hasAnimation())
     }
 
     let animation = null
@@ -26,7 +26,7 @@ class GifRandomCacher extends GifCacher {
 
     const animationIndex = getRandomCompletedAnimation()
     if (animationIndex !== undefined) {
-      animation = this._downloads[animationIndex].getAnimation()
+      animation = this._downloaders[animationIndex].getAnimation()
       removeIndex(animationIndex)
     }
 
@@ -37,4 +37,4 @@ class GifRandomCacher extends GifCacher {
 
 }
 
-export default GifRandomCacher
+export default RandomAnimationCacher
