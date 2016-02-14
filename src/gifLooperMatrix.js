@@ -1,14 +1,14 @@
 require('./polyfills')
 
 import GifLooper from './gifLooper'
-import GifSource from './gifSource'
+import AnimationSource from './animationSource'
 
 class GifLooperMatrix {
   
   constructor(selector) {
     this._selector    = selector
     this._loopers     = []
-    this._source      = GifSource.getDefault()
+    this._source      = AnimationSource.getDefault()
   }
 
   start() {
