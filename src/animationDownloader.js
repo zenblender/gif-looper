@@ -5,6 +5,7 @@ class AnimationDownloader {
   constructor(library, urlOrArrayOrPromise) {
     this._library       = library
 
+    this._urls          = []
     this._index         = 0
     this._animation     = null
     this._hasFailed     = false
@@ -68,7 +69,7 @@ class AnimationDownloader {
   _handleError(e) {
     this._resetFetching()
     console.log('ERROR:', e)
-    if (this._index < this._urls.length - 1) {
+    if (this._urls.length && this._index < this._urls.length - 1) {
       console.log('attempting to load alternate...')
       this._index++
       this._fetchNext()

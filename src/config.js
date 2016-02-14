@@ -46,7 +46,7 @@ const config = {
     reddit: {
       limit: 100,
       time: 'all',
-      subreddits: ['gifs','perfectloops']
+      subreddits: ['gifs', 'perfectloops']
     },
 
     preset: {
