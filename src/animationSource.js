@@ -16,7 +16,7 @@ const TYPES = {
 class AnimationSource {
 
   static getDefault() {
-    return AnimationSource.getNew(config.sourceType)
+    return AnimationSource.getNew(config.source)
   }
 
   static getNew(type) {

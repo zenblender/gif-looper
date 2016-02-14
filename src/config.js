@@ -2,11 +2,11 @@ import configBuilder from './configBuilder'
 
 const config = {
   
-  sourceType:               'tagged',
+  source:                   'tagged',
   rows:                     2,
   cols:                     2,
   minDurationMs:            1500,
-  simultaneousDownloads:    3,
+  simultaneousDownloads:    5,
 
   style: {
     objectFit:              'cover',

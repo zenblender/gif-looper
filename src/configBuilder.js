@@ -2,7 +2,7 @@ import bowser from 'bowser'
 
 import getQueryString from './utils/getQueryString'
 
-const ALLOWED_QUERY_PARAMS = ['rows', 'cols']
+const ALLOWED_QUERY_PARAMS = ['rows', 'cols', 'source']
 
 export default function (config) {  
   if (config.browserOverrides) {
