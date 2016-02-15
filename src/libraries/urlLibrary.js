@@ -4,14 +4,9 @@ class UrlLibrary {
     // override me
   }
 
-  canFetch() {
+  getValidUrl(url) {
     // override me if needed
-    return true
-  }
-
-  canDisplay() {
-    // override me if needed
-    return true
+    return url
   }
 
 }

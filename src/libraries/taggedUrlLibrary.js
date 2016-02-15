@@ -70,12 +70,8 @@ class TaggedUrlLibrary extends UrlLibrary {
     .then(_requestData)
   }
 
-  canFetch(url) {
-    return this._history.canFetch(url)
-  }
-
-  canDisplay(url) {
-    return this._history.canDisplay(url)
+  getValidUrl(url) {
+    return this._history.getValidUrl(url)
   }
 
 }

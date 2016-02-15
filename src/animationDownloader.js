@@ -25,11 +25,11 @@ class AnimationDownloader {
   }
 
   _handleUrl(url) {
-    this._url = url
-    if (this._library.canFetch(this._url)) {
+    this._url = this._library.getValidUrl(url)
+    if (this._url) {
       this._fetchUrl()  
     } else {
-      this._fail('url used recently')
+      this._fail()
     }
   }
 
@@ -72,7 +72,9 @@ class AnimationDownloader {
   }
 
   _fail(reason) {
-    console.log(`DOWNLOADER ERROR: ${ reason }`)
+    if (reason) {
+      console.log(`DOWNLOADER ERROR: ${ reason }`)
+    }
     this._hasFailed = true
     this._isFetching = false
   }
