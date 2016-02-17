@@ -1,16 +1,18 @@
 import config from './config'
 
-import TaggedUrlLibrary from './libraries/taggedUrlLibrary'
-import RedditUrlLibrary from './libraries/redditUrlLibrary'
 import PresetUrlLibrary from './libraries/presetUrlLibrary'
+import RandomUrlLibrary from './libraries/randomUrlLibrary'
+import RedditUrlLibrary from './libraries/redditUrlLibrary'
+import TaggedUrlLibrary from './libraries/taggedUrlLibrary'
 
 import RandomAnimationCacher from './cachers/randomAnimationCacher'
 import SequentialAnimationCacher from './cachers/sequentialAnimationCacher'
 
 const TYPES = {
-  'tagged': () => new AnimationSource(new TaggedUrlLibrary(), new RandomAnimationCacher()),
+  'preset': () => new AnimationSource(new PresetUrlLibrary(), new SequentialAnimationCacher()),
+  'random': () => new AnimationSource(new RandomUrlLibrary(), new RandomAnimationCacher()),
   'reddit': () => new AnimationSource(new RedditUrlLibrary(), new RandomAnimationCacher()),
-  'preset': () => new AnimationSource(new PresetUrlLibrary(), new SequentialAnimationCacher())
+  'tagged': () => new AnimationSource(new TaggedUrlLibrary(), new RandomAnimationCacher())
 }
 
 class AnimationSource {

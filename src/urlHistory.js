@@ -1,6 +1,6 @@
 import config from './config'
 
-const MAX_CONSECUTIVE_FAILURES = 2
+const MAX_CONSECUTIVE_FAILURES = 3
 
 class UrlHistory {
 

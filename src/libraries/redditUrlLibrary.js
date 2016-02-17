@@ -2,6 +2,7 @@ import config from '../config'
 
 import sample from 'lodash/collection/sample'
 
+import cacheBreakerUrl from '../utils/cacheBreakerUrl'
 import getQueryString from '../utils/getQueryString'
 import getUrlExtension from '../utils/getUrlExtension'
 import sampleFromList from '../utils/sampleFromList'
@@ -23,8 +24,7 @@ class RedditUrlLibrary extends UrlLibrary {
   }
 
   _getApiUrl() {
-    const cacheBreaker = Math.floor(Math.random() * 100000)
-    return `http://api.reddit.com/r/${ this._getSubreddit() }/random?cb=${ cacheBreaker }`
+    return cacheBreakerUrl(`http://api.reddit.com/r/${ this._getSubreddit() }/random`)
   }
 
   _getAnimationUrl(json) {
