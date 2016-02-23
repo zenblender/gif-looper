@@ -52,7 +52,7 @@ class AnimationView {
   _maybeDisplayNext() {
     const animation = this._source.getAnimationToDisplay()
     if (animation) {
-      this._displayAnimation(animation)
+      window.requestAnimationFrame(this._displayAnimation.bind(this, animation))
     } else {
       this._wait()
     }
