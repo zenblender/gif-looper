@@ -1,4 +1,3 @@
-import Animation from '../animation'
 import VideoAnimationBuilder from './videoAnimationBuilder'
 
 const MIME_TYPE = 'video/mp4'
