@@ -1,5 +1,6 @@
 import AnimationBuilder from './animationBuilder'
 import Animation from '../animation'
+import AnimationMetaData from '../animationMetaData'
 
 class VideoAnimationBuilder extends AnimationBuilder {
 
@@ -24,8 +25,12 @@ class VideoAnimationBuilder extends AnimationBuilder {
     return new Promise((resolve) => {
 
       videoElement.addEventListener('canplaythrough', () => {
-        const durationMs = videoElement.duration * 1000
-        const animation = new Animation(url, objectUrl, videoElement, durationMs)
+        const metaData = new AnimationMetaData(
+          videoElement.duration * 1000,
+          videoElement.videoWidth,
+          videoElement.videoHeight
+        )
+        const animation = new Animation(url, objectUrl, videoElement, metaData)
         resolve(animation)
       })
 

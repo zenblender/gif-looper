@@ -62,11 +62,11 @@ class AnimationView {
     const now = Date.now()
 
     const minDurationMs =
-      Math.ceil(config.minDurationMs / this._animation.duration) * this._animation.duration
+      Math.ceil(config.minDurationMs / this._animation.metaData.durationMs) * this._animation.metaData.durationMs
 
     let nextEligibleStopTimeMs = this._currentStartMs + minDurationMs
     while (nextEligibleStopTimeMs < now) {
-      nextEligibleStopTimeMs += this._animation.duration
+      nextEligibleStopTimeMs += this._animation.metaData.durationMs
     }
 
     const newDelayMs = nextEligibleStopTimeMs - now

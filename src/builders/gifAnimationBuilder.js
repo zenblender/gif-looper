@@ -2,6 +2,7 @@ import gify from './gify'
 
 import AnimationBuilder from './animationBuilder'
 import Animation from '../animation'
+import AnimationMetaData from '../animationMetaData'
 
 const MIME_TYPE = 'image/gif'
 
@@ -11,9 +12,13 @@ class GifAnimationBuilder extends AnimationBuilder {
     super(MIME_TYPE)
   }
 
-  _getDuration(arrayBuffer) {
+  _getMetaData(arrayBuffer) {
     const gifInfo = gify.getInfo(arrayBuffer)
-    return gifInfo.durationChrome
+    return new AnimationMetaData(
+      gifInfo.durationChrome,
+      gifInfo.width,
+      gifInfo.height
+    )
   }
 
   build(url, arrayBuffer) {
@@ -26,22 +31,9 @@ class GifAnimationBuilder extends AnimationBuilder {
     this._setElementStyle(imgElement)
 
     return Promise.resolve(
-      new Animation(url, objectUrl, imgElement, this._getDuration(arrayBuffer))
+      new Animation(url, objectUrl, imgElement, this._getMetaData(arrayBuffer))
     )
-      /*
-      const loadingElement = subElement || element
 
-      loadingElement.addEventListener('load', () => {
-        console.log('LOAD DONE')
-        URL_CREATOR.revokeObjectURL(url)
-        resolve(new Animation(this._fetchingUrls, element, duration, type))
-      })
-      loadingElement.addEventListener('error', () => {
-        console.log('LOAD ERROR')
-        URL_CREATOR.revokeObjectURL(url)
-        reject('object url could not be loaded')
-      })
-      */
   }
 
 }

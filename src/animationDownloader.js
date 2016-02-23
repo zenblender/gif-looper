@@ -13,12 +13,11 @@ class AnimationDownloader {
     if (urlOrPromise.then) {
 
       // promise provided
-      urlOrPromise
-      .then(this._handleUrl.bind(this))
-      .catch(this._handleError.bind(this))
+      urlOrPromise.then(this._handleUrl.bind(this))
 
     } else {
 
+      // url provided
       this._handleUrl(urlOrPromise)
 
     }
@@ -26,11 +25,7 @@ class AnimationDownloader {
 
   _handleUrl(url) {
     this._url = this._library.getValidUrl(url)
-    if (this._url) {
-      this._fetchUrl()  
-    } else {
-      this._fail()
-    }
+    this._fetchUrl()  
   }
 
   _createAnimationFromData(arrayBuffer) {
@@ -61,14 +56,10 @@ class AnimationDownloader {
       .then(this._requestData)
       .then(this._createAnimationFromData.bind(this))
       .then(this._finish.bind(this))
-      .catch(this._handleError.bind(this))
+      .catch(this._fail.bind(this))
     } else {
       this._fail('url not available')
     }
-  }
-
-  _handleError(e) {
-    this._fail(`could not fetch ${ this._url }`)
   }
 
   _fail(reason) {
