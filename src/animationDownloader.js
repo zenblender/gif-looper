@@ -25,13 +25,19 @@ class AnimationDownloader {
 
   _handleUrl(url) {
     this._url = this._library.getValidUrl(url)
-    this._fetchUrl()  
+    this._fetchUrl()
   }
 
   _createAnimationFromData(arrayBuffer) {
-    return new Promise((resolve) => {
-      const animationPromise = AnimationBuilderFactory.build(this._url, arrayBuffer)
-      resolve(animationPromise)
+    return new Promise((resolve, reject) => {
+      AnimationBuilderFactory.build(this._url, arrayBuffer)
+      .then((animation) => {
+        if (this._library.validator.isValidMetaData(animation.absoluteUrl, animation.metaData)) {
+          resolve(animation)
+        } else {
+          reject('invalid meta data')
+        }
+      })
     })
   }
 

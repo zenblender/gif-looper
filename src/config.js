@@ -5,8 +5,11 @@ const config = {
   source:                   'tagged',
   rows:                     2,
   cols:                     2,
-  minDurationMs:            1500,
+  minDisplayDurationMs:     1500,
   simultaneousDownloads:    5,
+  minWidth:                 200,
+  minHeight:                150,
+  maxFileDurationMs:        10000,
 
   style: {
     objectFit:              'cover',

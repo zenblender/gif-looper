@@ -1,12 +1,15 @@
 class UrlLibrary {
   
+  constructor(validator) {
+    this.validator = validator
+  }
+
   getNextUrl() {
     // override me
   }
 
   getValidUrl(url) {
-    // override me if needed
-    return url
+    return this.validator.getValidUrl(url)
   }
 
 }

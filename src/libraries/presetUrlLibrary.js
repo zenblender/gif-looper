@@ -5,6 +5,8 @@ import shuffle from 'lodash/collection/shuffle'
 
 import UrlLibrary from './urlLibrary'
 
+import PassthroughUrlValidator from '../validators/passthroughUrlValidator'
+
 import crossOriginUrl from '../utils/crossOriginUrl'
 
 const URLS = [
@@ -80,7 +82,7 @@ const URLS = [
 class PresetUrlLibrary extends UrlLibrary {
 
   constructor() {
-    super()
+    super(new PassthroughUrlValidator())
     this._urlIndex = -1
     this._urls = PresetUrlLibrary._build(URLS)
   }

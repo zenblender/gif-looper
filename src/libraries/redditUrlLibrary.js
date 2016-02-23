@@ -2,20 +2,20 @@ import config from '../config'
 
 import sample from 'lodash/collection/sample'
 
+import LimitedUrlValidator from '../validators/limitedUrlValidator'
+
 import cacheBreakerUrl from '../utils/cacheBreakerUrl'
 import getQueryString from '../utils/getQueryString'
 import getUrlExtension from '../utils/getUrlExtension'
 import sampleFromList from '../utils/sampleFromList'
 
 import animationExtensions from '../animationExtensions'
-import UrlHistory from '../urlHistory'
 import UrlLibrary from './urlLibrary'
 
 class RedditUrlLibrary extends UrlLibrary {
 
   constructor() {
-    super()
-    this._history = new UrlHistory()
+    super(new LimitedUrlValidator())
     this._subreddits = getQueryString('subreddit') || config.sources.reddit.subreddits
   }
 
@@ -76,10 +76,6 @@ class RedditUrlLibrary extends UrlLibrary {
     return fetch(this._getApiUrl())
     .then(_handleStatus)
     .then(_requestData)
-  }
-
-  getValidUrl(url) {
-    return this._history.getValidUrl(url)
   }
 
 }

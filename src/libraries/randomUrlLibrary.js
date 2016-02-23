@@ -1,16 +1,16 @@
 import { TextDecoder } from 'text-encoding'
 
+import LimitedUrlValidator from '../validators/limitedUrlValidator'
+
 import cacheBreakerUrl from '../utils/cacheBreakerUrl'
 import crossOriginUrl from '../utils/crossOriginUrl'
 
-import UrlHistory from '../urlHistory'
 import UrlLibrary from './urlLibrary'
 
 class RandomUrlLibrary extends UrlLibrary {
   
   constructor() {
-    super()
-    this._history = new UrlHistory()
+    super(new LimitedUrlValidator())
   }
 
   _getUrl() {
