@@ -5,7 +5,7 @@ const config = {
   source:                   'tagged',
   rows:                     2,
   cols:                     2,
-  minDisplayDurationMs:     1500,
+  minDisplayDurationMs:     5000,
   simultaneousDownloads:    5,
   minWidth:                 200,
   minHeight:                150,
