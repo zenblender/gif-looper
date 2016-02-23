@@ -1,3 +1,5 @@
+import { TextDecoder } from 'text-encoding'
+
 import cacheBreakerUrl from '../utils/cacheBreakerUrl'
 import crossOriginUrl from '../utils/crossOriginUrl'
 
@@ -43,7 +45,8 @@ class RandomUrlLibrary extends UrlLibrary {
       if (mp4Element) {
         const src = mp4Element.getAttribute('src')
         if (src) {
-          return Promise.resolve(crossOriginUrl(src))
+          const mp4Url = crossOriginUrl(src)
+          return Promise.resolve(mp4Url)
         } else {
           return Promise.reject('No MP4 src specified')  
         }
@@ -52,7 +55,9 @@ class RandomUrlLibrary extends UrlLibrary {
       }
     }
 
-    return fetch(this._getUrl())
+    const url = this._getUrl()
+
+    return fetch(url)
     .then(handleStatus)
     .then(requestData)
     .then(parseUrlFromArrayBuffer)

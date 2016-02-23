@@ -37,6 +37,12 @@ class AnimationView {
     this._clearContainer()
     this._container.appendChild(this._animation.element)
 
+    const videoElement = this._container.querySelector('video')
+    if (videoElement) {
+      videoElement.currentTime = 0
+      videoElement.play()
+    }
+
     this._animation.revokeObjectUrl()
 
     this._currentStartMs = Date.now()

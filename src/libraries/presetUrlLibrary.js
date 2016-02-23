@@ -5,7 +5,16 @@ import shuffle from 'lodash/collection/shuffle'
 
 import UrlLibrary from './urlLibrary'
 
+import crossOriginUrl from '../utils/crossOriginUrl'
+
 const URLS = [
+  crossOriginUrl('http://www.gifbin.com/bin/122014/1418568330_how_spiral_shaped_pasta_is_made.mp4'),
+  crossOriginUrl('http://www.gifbin.com/bin/072014/1405885900_automatic_pretzel_making_machine.mp4'),
+  crossOriginUrl('http://www.gifbin.com/bin/052014/1402176480_big_rock_on_ice_prank.webm'),
+  crossOriginUrl('http://www.gifbin.com/bin/112014/1416241533_tablecloth_pull_trick.webm'),
+  crossOriginUrl('http://www.gifbin.com/bin/022010/1266318479_big_dog_slipping.webm'),
+  crossOriginUrl('http://www.gifbin.com/bin/1235987671_dog-running-in-sleep.webm'),
+  crossOriginUrl('http://www.gifbin.com/bin/072011/1309772938_playground_ouch.webm'),
   'https://media.giphy.com/media/Zg44yLGbvXCjm/giphy.gif',
   'https://media.giphy.com/media/10juQ7fAaQjuHS/giphy.gif',
   'https://media.giphy.com/media/EG7bbilpEg6nS/giphy.gif',

@@ -7,6 +7,10 @@ class AnimationBuilder {
     this._mimeType = mimeType
   }
 
+  build(url, arrayBuffer) {
+    // override me
+  }
+
   _getObjectUrl(arrayBuffer) {
     const blob = new Blob([arrayBuffer], { type: this._mimeType })
     return urlCreator.createObjectURL(blob)

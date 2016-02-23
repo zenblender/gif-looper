@@ -1,1 +1,2 @@
 require('./fetch')
+require('./textEncoding')

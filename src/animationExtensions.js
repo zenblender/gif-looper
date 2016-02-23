@@ -1,1 +1,1 @@
-export default [ 'gif', 'mp4' ]
+export default [ 'gif', 'mp4', 'webm' ]

@@ -1,11 +1,13 @@
 import GifAnimationBuilder from './gifAnimationBuilder'
 import Mp4AnimationBuilder from './mp4AnimationBuilder'
+import WebMAnimationBuilder from './webMAnimationBuilder'
 
 import getUrlExtension from '../utils/getUrlExtension'
 
 const BUILDER_CLASSES = {
-  gif: GifAnimationBuilder,
-  mp4: Mp4AnimationBuilder
+  gif:  GifAnimationBuilder,
+  mp4:  Mp4AnimationBuilder,
+  webm: WebMAnimationBuilder
 }
 
 class AnimationBuilderFactory {
