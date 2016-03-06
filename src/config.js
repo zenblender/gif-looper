@@ -5,6 +5,7 @@ const config = {
   source:                   'tagged',
   rows:                     2,
   cols:                     2,
+  preferredFormat:          'mp4',
   minDisplayDurationMs:     5000,
   simultaneousDownloads:    5,
   minWidth:                 200,
@@ -23,14 +24,14 @@ const config = {
   browserOverrides: {
     mobile: {
       rows: 1,
-      cols: 1
+      cols: 1,
+      preferredFormat:      'gif'
     }
   },
 
   sources: {
 
     tagged: {
-      preferredFileFormat:  'gif',
       tags: [
         ['funny', 'fun', 'hilarious', 'silly'],
         ['weird', 'absurd', 'strange', 'crazy', 'wtf'],

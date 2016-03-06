@@ -34,9 +34,9 @@ class TaggedUrlLibrary extends UrlLibrary {
   getNextUrl() {
 
     const _getPreferredUrl = (json) => {
-      const preferredFileFormat = config.sources.tagged.preferredFileFormat
-      if (preferredFileFormat && json.data[FILE_FORMAT_KEYS[preferredFileFormat]]) {
-        return json.data[FILE_FORMAT_KEYS[preferredFileFormat]]
+      const preferredFormat = config.preferredFormat
+      if (preferredFormat && json.data[FILE_FORMAT_KEYS[preferredFormat]]) {
+        return json.data[FILE_FORMAT_KEYS[preferredFormat]]
       }
 
       if (json.data[FILE_FORMAT_KEYS[DEFAULT_FILE_FORMAT]]) {
