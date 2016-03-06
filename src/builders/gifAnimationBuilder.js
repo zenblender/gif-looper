@@ -31,7 +31,7 @@ class GifAnimationBuilder extends AnimationBuilder {
     this._setElementStyle(imgElement)
 
     return Promise.resolve(
-      new Animation(url, objectUrl, imgElement, this._getMetaData(arrayBuffer))
+      new Animation(url, objectUrl, imgElement, false, this._getMetaData(arrayBuffer))
     )
 
   }

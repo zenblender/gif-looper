@@ -3,10 +3,11 @@ import config from './config'
 class AnimationView {
 
   constructor(container, source) {
-    this._container       = container
-    this._source          = source
-    this._animation       = null
-    this._currentStartMs  = null
+    this._container         = container
+    this._source            = source
+    this._animation         = null
+    this._previousAnimation = null
+    this._currentStartMs    = null
   }
 
   start() {
@@ -37,15 +38,15 @@ class AnimationView {
     this._clearContainer()
     this._container.appendChild(this._animation.element)
 
-    const videoElement = this._container.querySelector('video')
-    if (videoElement) {
-      videoElement.currentTime = 0
-      videoElement.play()
-    }
-
-    this._animation.revokeObjectUrl()
+    this._animation.playFromStart()
 
     this._currentStartMs = Date.now()
+
+    if (this._previousAnimation) {
+      this._previousAnimation.revokeObjectUrl()
+    }
+    this._previousAnimation = this._animation
+
     this._wait()
   }
 

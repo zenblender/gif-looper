@@ -30,7 +30,7 @@ class VideoAnimationBuilder extends AnimationBuilder {
           videoElement.videoWidth,
           videoElement.videoHeight
         )
-        const animation = new Animation(url, objectUrl, videoElement, metaData)
+        const animation = new Animation(url, objectUrl, videoElement, true, metaData)
         resolve(animation)
       })
 
