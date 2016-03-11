@@ -8,12 +8,14 @@ class AnimationGrid {
   constructor(selector) {
     this._selector    = selector
     this._views       = []
-    this._source      = AnimationSource.getDefault()
+    this._source      = null
   }
 
   start() {
-    this._views = Array.prototype.map.call(document.querySelectorAll(this._selector), (container) => {
-      const view = new AnimationView(container, this._source)
+    const viewElements = Array.from(document.querySelectorAll(this._selector))
+    this._source = AnimationSource.getDefault(viewElements.length)
+    this._views = viewElements.map((container, index) => {
+      const view = new AnimationView(container, this._source, index)
       view.start()
       return view
     })

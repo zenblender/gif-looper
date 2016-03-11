@@ -9,33 +9,41 @@ import RandomAnimationCacher from './cachers/randomAnimationCacher'
 import SequentialAnimationCacher from './cachers/sequentialAnimationCacher'
 
 const TYPES = {
-  'preset': () => new AnimationSource(new PresetUrlLibrary(), new SequentialAnimationCacher()),
-  'random': () => new AnimationSource(new RandomUrlLibrary(), new RandomAnimationCacher()),
-  'reddit': () => new AnimationSource(new RedditUrlLibrary(), new RandomAnimationCacher()),
-  'tagged': () => new AnimationSource(new TaggedUrlLibrary(), new RandomAnimationCacher())
+  'preset': (numViews) => new AnimationSource(new PresetUrlLibrary(), new SequentialAnimationCacher(), numViews),
+  'random': (numViews) => new AnimationSource(new RandomUrlLibrary(), new RandomAnimationCacher(), numViews),
+  'reddit': (numViews) => new AnimationSource(new RedditUrlLibrary(), new RandomAnimationCacher(), numViews),
+  'tagged': (numViews) => new AnimationSource(new TaggedUrlLibrary(), new RandomAnimationCacher(), numViews)
 }
 
 class AnimationSource {
 
-  static getDefault() {
-    return AnimationSource.getNew(config.source)
+  static getDefault(numViews) {
+    return AnimationSource.getNew(config.source, numViews)
   }
 
-  static getNew(type) {
-    return TYPES[type]()
+  static getNew(type, numViews) {
+    return TYPES[type](numViews)
   }
 
-  constructor(library, cacher) {
+  constructor(library, cacher, numViews) {
     this._cacher = cacher
     this._cacher.setLibrary(library)
+    this._numViews = numViews
+    this._viewIndex = 0
   }
 
   startDownloading() {
     this._cacher.start()
   }
 
-  getAnimationToDisplay() {
-    return this._cacher.getNextAnimation()
+  getAnimationToDisplay(fromAnimationViewIndex) {
+    if (fromAnimationViewIndex === this._viewIndex) {
+      const animation = this._cacher.getNextAnimation()
+      if (animation) {
+        this._viewIndex = (this._viewIndex + 1) % this._numViews
+        return animation
+      }
+    }
   }
   
 }

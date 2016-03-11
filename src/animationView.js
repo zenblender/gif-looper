@@ -2,9 +2,10 @@ import config from './config'
 
 class AnimationView {
 
-  constructor(container, source) {
+  constructor(container, source, index) {
     this._container         = container
     this._source            = source
+    this._index             = index
     this._animation         = null
     this._previousAnimation = null
     this._currentStartMs    = null
@@ -17,7 +18,7 @@ class AnimationView {
 
   _waitForFirstDownload() {
     setTimeout(() => {
-      const animation = this._source.getAnimationToDisplay()
+      const animation = this._source.getAnimationToDisplay(this._index)
       if (animation) {
         this._displayAnimation(animation)
       } else {
@@ -51,7 +52,7 @@ class AnimationView {
   }
 
   _maybeDisplayNext() {
-    const animation = this._source.getAnimationToDisplay()
+    const animation = this._source.getAnimationToDisplay(this._index)
     if (animation) {
       window.requestAnimationFrame(this._displayAnimation.bind(this, animation))
     } else {

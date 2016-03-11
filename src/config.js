@@ -6,7 +6,7 @@ const config = {
   rows:                     2,
   cols:                     2,
   preferredFormat:          'mp4',
-  minDisplayDurationMs:     5000,
+  minDisplayDurationMs:     1500,
   simultaneousDownloads:    5,
   minWidth:                 200,
   minHeight:                150,
