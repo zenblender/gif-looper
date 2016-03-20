@@ -20,7 +20,11 @@ class TaggedUrlLibrary extends UrlLibrary {
 
   constructor() {
     super(new LimitedUrlValidator())
-    this._tags = getQueryString('tag') || config.sources.tagged.tags
+    this._tags = getQueryString('tag')
+    if (this._tags === null) {
+      // do not revert to default tags if blank string is provided as an override
+      this._tags = config.sources.tagged.tags
+    }
   }
 
   _getTag() {
@@ -28,7 +32,9 @@ class TaggedUrlLibrary extends UrlLibrary {
   }
 
   _getApiUrl() {
-    return `http://api.giphy.com/v1/gifs/random?tag=${ this._getTag() }&api_key=${ PUBLIC_API_KEY }`
+    const tag = this._getTag()
+    const tagParam = tag ? `&tag=${ tag }` : ''
+    return `http://api.giphy.com/v1/gifs/random?api_key=${ PUBLIC_API_KEY }${ tagParam }`
   }
 
   getNextUrl() {
