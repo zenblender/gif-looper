@@ -6,7 +6,7 @@ import cacheBreakerUrl from '../utils/cacheBreakerUrl'
 import crossOriginUrl from '../utils/crossOriginUrl'
 import replaceUrlExtension from '../utils/replaceUrlExtension'
 
-class GifBinUrlProvider extends HTMLUrlProvider {
+class RandomGifBinUrlProvider extends HTMLUrlProvider {
   
   _getRequestUrl() {
     return crossOriginUrl(cacheBreakerUrl('http://www.gifbin.com/random'))
@@ -31,4 +31,4 @@ class GifBinUrlProvider extends HTMLUrlProvider {
 
 }
 
-export default GifBinUrlProvider
+export default RandomGifBinUrlProvider

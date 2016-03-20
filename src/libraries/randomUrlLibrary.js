@@ -1,4 +1,4 @@
-import GifBinUrlProvider from '../urlProviders/gifBinUrlProvider'
+import RandomGifBinUrlProvider from '../urlProviders/randomGifBinUrlProvider'
 
 import LimitedUrlValidator from '../validators/limitedUrlValidator'
 
@@ -8,7 +8,7 @@ class RandomUrlLibrary extends UrlLibrary {
   
   constructor() {
     super(new LimitedUrlValidator())
-    this._urlProvider = new GifBinUrlProvider()
+    this._urlProvider = new RandomGifBinUrlProvider()
   }
 
   getNextUrl() {
