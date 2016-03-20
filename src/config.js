@@ -32,6 +32,7 @@ const config = {
   sources: {
 
     tagged: {
+      tagDurationMs:        30000,
       tags: [
         ['funny', 'fun', 'hilarious', 'silly'],
         ['weird', 'absurd', 'strange', 'crazy', 'wtf'],

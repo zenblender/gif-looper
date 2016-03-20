@@ -1,11 +1,9 @@
 import config from '../config'
+import TagProvider from '../tagProvider'
 
 import UrlLibrary from './urlLibrary'
 
 import LimitedUrlValidator from '../validators/limitedUrlValidator'
-
-import getQueryString from '../utils/getQueryString'
-import sampleFromList from '../utils/sampleFromList'
 
 const PUBLIC_API_KEY = 'dc6zaTOxFJmzC'
 
@@ -20,19 +18,11 @@ class TaggedUrlLibrary extends UrlLibrary {
 
   constructor() {
     super(new LimitedUrlValidator())
-    this._tags = getQueryString('tag')
-    if (this._tags === null) {
-      // do not revert to default tags if blank string is provided as an override
-      this._tags = config.sources.tagged.tags
-    }
-  }
-
-  _getTag() {
-    return sampleFromList(this._tags)
+    this._tagProvider = new TagProvider()
   }
 
   _getApiUrl() {
-    const tag = this._getTag()
+    const tag = this._tagProvider.get()
     const tagParam = tag ? `&tag=${ tag }` : ''
     return `http://api.giphy.com/v1/gifs/random?api_key=${ PUBLIC_API_KEY }${ tagParam }`
   }
